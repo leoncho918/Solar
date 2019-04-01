@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>three.js - pointerlock controls</title>
+		<title>Solar</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<style>
@@ -121,7 +121,7 @@
 
 
 				var material_box = new THREE.MeshLambertMaterial();
-				material_box.color=  new THREE.Color(1,0,0);
+				material_box.color=  new THREE.Color(0,1,0);
 				material_box.wireframe = false;
 				var geometry_box = new THREE.BoxGeometry(100,0.1,100,32,1,32);
 
@@ -129,15 +129,15 @@
 				//BoxMesh.position.y=-0.1;
 				scene.add(BoxMesh);
 
-				var sphere_color = new THREE.Color("rgb(255, 102, 0)");
-	      var sphere_geometry = new THREE.SphereGeometry(2, 32, 32);
+				var sphere_color = new THREE.Color("rgb(255, 153, 51)");
+	      var sphere_geometry = new THREE.SphereGeometry(7.5, 32, 32);
 	      var sphere_material = new THREE.MeshPhongMaterial();
 	      sphere_material.color = sphere_color;
 	      sphere_material.shininess = 100;
 	      var sphere_mesh = new THREE.Mesh(sphere_geometry, sphere_material);
-				sphere_mesh.castShadow = false;
-				sphere_mesh.receiveShadow = false;
-				sphere_mesh.position.y = 5;
+				//sphere_mesh.castShadow = false;
+				//sphere_mesh.receiveShadow = false;
+				sphere_mesh.position.y = 10;
 	      scene.add(sphere_mesh);
 
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
@@ -148,9 +148,12 @@
 				var ambientlight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.4);
 				scene.add(ambientlight);
 
-				var sunlight = new THREE.PointLight(new THREE.Color(1, 1, 1), 0.4);
-				sunlight.position.y = 5;
+				var sunlight = new THREE.PointLight(new THREE.Color(1, 1, 1), 1);
+				sunlight.position.y = 10;
 				scene.add(sunlight);
+
+				var cameralight = new THREE.PointLight(new THREE.Color(1, 1, 1), 0.4);
+				camera.add(cameralight);
 
 				window.addEventListener( 'resize', onWindowResize, false );
 			}
