@@ -2,6 +2,7 @@
 <html lang="en">
 	<head>
 		<title>Solar</title>
+		<link rel="stylesheet" href="style.css">
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<style>
@@ -51,16 +52,15 @@
 			var blocker = document.getElementById('blocker');
 			var instructions = document.getElementById('instructions');
 
-			var supportPointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
-			if (supportPointerLock) {
-				var body = document.body;
-				var pointerLockChange = function (event) {
-					if (document.pointerLockElement === body || document.mozPointerLockElement === body || document.webkitPointerLockElement === body) {
+			var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
+			if ( havePointerLock ) {
+				var element = document.body;
+				var pointerLockStateChange = function ( event ) {
+					if ( document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element ) {
 						controlsEnabled = true;
 						controls.enabled = true;
 						blocker.style.display = 'none';
-					}
-					else {
+					} else {
 						controls.enabled = false;
 						blocker.style.display = '-webkit-box';
 						blocker.style.display = '-moz-box';
@@ -68,6 +68,30 @@
 						instructions.style.display = '';
 					}
 				};
+				// Hook pointer lock state change events
+				document.addEventListener( 'pointerlockchange', pointerLockStateChange, false );
+				document.addEventListener( 'mozpointerlockchange', pointerLockStateChange, false );
+				document.addEventListener( 'webkitpointerlockchange', pointerLockStateChange, false );
+				instructions.addEventListener( 'click', function ( event ) {
+					instructions.style.display = 'none';
+					// Ask the browser to lock the pointer
+					element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
+					if ( /Firefox/i.test( navigator.userAgent ) ) {
+						var fullscreenchange = function ( event ) {
+							if ( document.fullscreenElement === element || document.mozFullscreenElement === element || document.mozFullScreenElement === element ) {
+								document.removeEventListener( 'fullscreenchange', fullscreenchange );
+								document.removeEventListener( 'mozfullscreenchange', fullscreenchange );
+								element.requestPointerLock();
+							}
+						};
+						document.addEventListener( 'fullscreenchange', fullscreenchange, false );
+						document.addEventListener( 'mozfullscreenchange', fullscreenchange, false );
+						element.requestFullscreen = element.requestFullscreen || element.mozRequestFullscreen || element.mozRequestFullScreen || element.webkitRequestFullscreen;
+						element.requestFullscreen();
+					} else {
+						element.requestPointerLock();
+					}
+				}, false );
 			}
 
 			function init() {
