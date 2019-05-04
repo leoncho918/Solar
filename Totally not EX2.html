@@ -28,16 +28,13 @@
 			<div id="instructions">
 				<span style="font-size:40px">Click to play</span>
 				<br />
-				(W, A, S, D = Move, SPACE = Jump, MOUSE = Look around)
+				(W, A, S, D = Move, MOUSE = Look around)
 			</div>
 		</div>
 
 		<script>
 
-			var camera, scene, renderer, controls;
-
-
-			var controlsEnabled = true;
+			var camera, scene, renderer, controls, controlsEnabled;
 
 			var moveForward = false;
 			var moveBackward = false;
@@ -48,15 +45,14 @@
 			var velocity = new THREE.Vector3();
 			var direction = new THREE.Vector3();
 			var color = new THREE.Color();
-			var controls;
 			var blocker = document.getElementById('blocker');
 			var instructions = document.getElementById('instructions');
 
 			var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
 			if ( havePointerLock ) {
-				var element = document.body;
+				var docBody = document.body;
 				var pointerLockStateChange = function ( event ) {
-					if ( document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element ) {
+					if ( document.pointerLockElement === docBody || document.mozPointerLockElement === docBody || document.webkitPointerLockElement === docBody ) {
 						controlsEnabled = true;
 						controls.enabled = true;
 						blocker.style.display = 'none';
@@ -73,23 +69,24 @@
 				document.addEventListener( 'mozpointerlockchange', pointerLockStateChange, false );
 				document.addEventListener( 'webkitpointerlockchange', pointerLockStateChange, false );
 				instructions.addEventListener( 'click', function ( event ) {
+					controlsEnabled = true;
 					instructions.style.display = 'none';
 					// Ask the browser to lock the pointer
-					element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
+					docBody.requestPointerLock = docBody.requestPointerLock || docBody.mozRequestPointerLock || docBody.webkitRequestPointerLock;
 					if ( /Firefox/i.test( navigator.userAgent ) ) {
 						var fullscreenchange = function ( event ) {
-							if ( document.fullscreenElement === element || document.mozFullscreenElement === element || document.mozFullScreenElement === element ) {
+							if ( document.fullscreenElement === docBody || document.mozFullscreenElement === docBody || document.mozFullScreenElement === docBody ) {
 								document.removeEventListener( 'fullscreenchange', fullscreenchange );
 								document.removeEventListener( 'mozfullscreenchange', fullscreenchange );
-								element.requestPointerLock();
+								docBody.requestPointerLock();
 							}
 						};
 						document.addEventListener( 'fullscreenchange', fullscreenchange, false );
 						document.addEventListener( 'mozfullscreenchange', fullscreenchange, false );
-						element.requestFullscreen = element.requestFullscreen || element.mozRequestFullscreen || element.mozRequestFullScreen || element.webkitRequestFullscreen;
-						element.requestFullscreen();
+						docBody.requestFullscreen = docBody.requestFullscreen || docBody.mozRequestFullscreen || docBody.mozRequestFullScreen || docBody.webkitRequestFullscreen;
+						docBody.requestFullscreen();
 					} else {
-						element.requestPointerLock();
+						docBody.requestPointerLock();
 					}
 				}, false );
 			}
@@ -107,7 +104,8 @@
 
 				controls = new THREE.PointerLockControls( camera );
 
-        controls.enabled = true;
+        controls.enabled = false;
+				controlsEnabled = false;
 				scene.add( controls.getObject() );
 
 				var onKeyDown = function ( event ) {
@@ -195,7 +193,7 @@
 				var ambientlight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.4);
 				scene.add(ambientlight);
 
-				var sunlight = new THREE.PointLight(new THREE.Color(1, 1, 1), 1);
+				var sunlight = new THREE.PointLight(new THREE.Color(1, 1, 1), 5);
 				sunlight.position.y = 10;
 				scene.add(sunlight);
 
@@ -235,8 +233,11 @@
 					direction.x = Number( moveLeft ) - Number( moveRight );
 					direction.normalize();
 
-					if ( moveForward || moveBackward ) velocity.z -= direction.z * 400.0 * delta;
-					if ( moveLeft || moveRight ) velocity.x -= direction.x * 400.0 * delta;
+					if ( moveForward || moveBackward )
+						velocity.z -= direction.z * 400.0 * delta;
+
+					if ( moveLeft || moveRight )
+						velocity.x -= direction.x * 400.0 * delta;
 
 					controls.getObject().translateX( velocity.x * delta );
 					controls.getObject().translateZ( velocity.z * delta );
