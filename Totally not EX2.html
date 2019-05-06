@@ -34,6 +34,9 @@
 
 		<script>
 
+			var earth_distance = 100;
+			var moon_distance = 15;
+
 			var camera, scene, renderer, controls, controlsEnabled;
 
 			var moveForward = false;
@@ -49,6 +52,8 @@
 			var color = new THREE.Color();
 			var blocker = document.getElementById('blocker');
 			var instructions = document.getElementById('instructions');
+
+			var sun_point, earth_point;
 
 			var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
 			if ( havePointerLock ) {
@@ -187,21 +192,43 @@
 				var material_box = new THREE.MeshLambertMaterial();
 				material_box.color=  new THREE.Color(0.7,0.7,0.7);
 				var geometry_box = new THREE.BoxGeometry(100,0.1,100,32,1,32);
-
 				var BoxMesh = new THREE.Mesh(geometry_box,material_box);
-				//BoxMesh.position.y=-0.1;
-				scene.add(BoxMesh);
+				BoxMesh.position.y = -10;
+				//scene.add(BoxMesh);
 
-				var sphere_color = new THREE.Color("rgb(255, 153, 51)");
-	      var sphere_geometry = new THREE.SphereGeometry(7.5, 32, 32);
-	      var sphere_material = new THREE.MeshLambertMaterial();
-	      sphere_material.color = sphere_color;
-				sphere_material.emissive = sphere_color;
-	      var sphere_mesh = new THREE.Mesh(sphere_geometry, sphere_material);
-				//sphere_mesh.castShadow = false;
-				//sphere_mesh.receiveShadow = false;
-				sphere_mesh.position.y = 10;
-	      scene.add(sphere_mesh);
+				var sun_color = new THREE.Color("rgb(255, 153, 51)");
+	      var sun_geometry = new THREE.SphereGeometry(10, 32, 32);
+	      var sun_material = new THREE.MeshLambertMaterial();
+	      sun_material.color = sun_color;
+				sun_material.emissive = sun_color;
+	      sun_mesh = new THREE.Mesh(sun_geometry, sun_material);
+				//sun_mesh.castShadow = false;
+				//sun_mesh.receiveShadow = false;
+	      scene.add(sun_mesh);
+
+				sun_point = new THREE.Object3D();
+				sun_mesh.add(sun_point);
+
+				var earth_color = new THREE.Color("rgb(66, 134, 244)");
+	      var earth_geometry = new THREE.SphereGeometry(3, 32, 32);
+	      var earth_material = new THREE.MeshLambertMaterial();
+	      earth_material.color = earth_color;
+	      var earth_mesh = new THREE.Mesh(earth_geometry, earth_material);
+				earth_mesh.position.set(earth_distance, 0 , 0);
+
+				earth_point = new THREE.Object3D();
+				earth_mesh.add(earth_point);
+
+				sun_point.add(earth_mesh);
+
+				var moon_color = new THREE.Color("rgb(166, 166, 166)");
+	      var moon_geometry = new THREE.SphereGeometry(1, 32, 32);
+	      var moon_material = new THREE.MeshLambertMaterial();
+	      moon_material.color = moon_color;
+	      var moon_mesh = new THREE.Mesh(moon_geometry, moon_material);
+				moon_mesh.position.set(moon_distance, 0 , 0);
+
+				earth_point.add(moon_mesh);
 
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
@@ -211,13 +238,14 @@
 				var ambientlight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.4);
 				scene.add(ambientlight);
 
-				var sunlight = new THREE.PointLight(new THREE.Color(1, 1, 1), 5);
+				var sunlight = new THREE.PointLight(new THREE.Color(1, 1, 1), 2);
 				sunlight.position.y = 10;
 				scene.add(sunlight);
 
+
 				/*var spotlight = new THREE.SpotLight(new THREE.Color(1, 1, 1), 0.4);
 				spotlight.position.y = 30;
-				spotlight.target = sphere_mesh;
+				spotlight.target = sun_mesh;
 				spotlight.penumbra = 0.3;
 				scene.add(spotlight);
 				var spotlightHelper = new THREE.SpotLightHelper(spotlight);
@@ -267,6 +295,9 @@
 					controls.getObject().translateY( velocity.y * delta );
 
 					prevTime = time;
+
+					sun_point.rotation.y += 0.01;
+					earth_point.rotation.y += 0.03;
 
 				}
 
