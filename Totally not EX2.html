@@ -40,6 +40,8 @@
 			var moveBackward = false;
 			var moveLeft = false;
 			var moveRight = false;
+			var moveUp = false;
+			var moveDown = false;
 
 			var prevTime = performance.now();
 			var velocity = new THREE.Vector3();
@@ -132,6 +134,14 @@
 							moveRight = true;
 							break;
 
+						case 32:
+							moveUp = true;
+							break;
+
+						case 16:
+							moveDown = true;
+							break;
+
 					}
 
 				};
@@ -158,6 +168,14 @@
 						case 39: // right
 						case 68: // d
 							moveRight = false;
+							break;
+
+						case 32:
+							moveUp = false;
+							break;
+
+						case 16:
+							moveDown = false;
 							break;
 
 					}
@@ -228,9 +246,11 @@
 
 					velocity.x -= velocity.x * 10.0 * delta;
 					velocity.z -= velocity.z * 10.0 * delta;
+					velocity.y -= velocity.y * 10.0 * delta;
 
 					direction.z = Number( moveForward ) - Number( moveBackward );
 					direction.x = Number( moveLeft ) - Number( moveRight );
+					direction.y = Number( moveDown ) - Number( moveUp );
 					direction.normalize();
 
 					if ( moveForward || moveBackward )
@@ -239,8 +259,12 @@
 					if ( moveLeft || moveRight )
 						velocity.x -= direction.x * 400.0 * delta;
 
+					if ( moveUp || moveDown )
+						velocity.y -= direction.y * 400.0 * delta;
+
 					controls.getObject().translateX( velocity.x * delta );
 					controls.getObject().translateZ( velocity.z * delta );
+					controls.getObject().translateY( velocity.y * delta );
 
 					prevTime = time;
 
