@@ -202,8 +202,10 @@
 	      sun_material.color = sun_color;
 				sun_material.emissive = sun_color;
 	      sun_mesh = new THREE.Mesh(sun_geometry, sun_material);
-				//sun_mesh.castShadow = false;
-				//sun_mesh.receiveShadow = false;
+				//sun_mesh.castShadow = true;
+				//sun_mesh.receiveShadow = true;
+				var sunlight = new THREE.PointLight(new THREE.Color(1, 1, 1), 2);
+				sun_mesh.add(sunlight);
 	      scene.add(sun_mesh);
 
 				sun_point = new THREE.Object3D();
@@ -238,9 +240,6 @@
 				var ambientlight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.4);
 				scene.add(ambientlight);
 
-				var sunlight = new THREE.PointLight(new THREE.Color(1, 1, 1), 2);
-				sunlight.position.y = 10;
-				scene.add(sunlight);
 
 
 				/*var spotlight = new THREE.SpotLight(new THREE.Color(1, 1, 1), 0.4);
