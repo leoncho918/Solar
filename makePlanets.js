@@ -1,15 +1,8 @@
 function generatePlanets() {
-
-  var sun_color = new THREE.Color("rgb(255, 153, 51)");
-  var sun_geometry = new THREE.SphereGeometry(10, 32, 32);
-  var sun_material = new THREE.MeshLambertMaterial();
-  sun_material.color = sun_color;
-  sun_material.emissive = sun_color;
-  sun_mesh = new THREE.Mesh(sun_geometry, sun_material);
-  //sun_mesh.castShadow = true;
-  //sun_mesh.receiveShadow = true;
-  var sunlight = new THREE.PointLight(new THREE.Color(1, 1, 1), 2);
-  sun_mesh.add(sunlight);
+  //Sun
+  var sun_mesh = new Star(10, "rgb(255, 153, 51)");
+  var light = new THREE.PointLight(new THREE.Color(1, 1, 1), 2);
+  sun_mesh.add(light)
   scene.add(sun_mesh);
 
   sun_point = new THREE.Object3D();

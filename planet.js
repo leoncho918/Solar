@@ -12,7 +12,6 @@ function Planet(radius, colour) {
 
 Planet.prototype = Object.create(THREE.Mesh.prototype);
 Planet.prototype.constructor = Planet;
-
 Planet.prototype.getMesh = function() {
   return this.mesh;
 }
