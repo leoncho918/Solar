@@ -1,10 +1,4 @@
 function generatePlanets() {
-  var material_box = new THREE.MeshLambertMaterial();
-  material_box.color=  new THREE.Color(0.7,0.7,0.7);
-  var geometry_box = new THREE.BoxGeometry(100,0.1,100,32,1,32);
-  var BoxMesh = new THREE.Mesh(geometry_box,material_box);
-  BoxMesh.position.y = -10;
-  //scene.add(BoxMesh);
 
   var sun_color = new THREE.Color("rgb(255, 153, 51)");
   var sun_geometry = new THREE.SphereGeometry(10, 32, 32);
