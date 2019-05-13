@@ -6,7 +6,6 @@ function generatePlanets() {
   var moonSpeed = 0.03;
   var planets = [];
 
-  //Sun
   var sunObj = new Planet("rgb(255, 153, 51)", 10);
   sunObj.setEmissive();
   var sun = sunObj.getPlanet();
@@ -17,7 +16,7 @@ function generatePlanets() {
   //Earth
   var earthObj = new Planet("rgb(66, 134, 244)", 3);
   var earth = earthObj.getPlanet();
-  sunObj.addOrbit(earth, earthSpeed, earth_distance);
+  sunObj.addOrbit(earth, earthSpeed), earth_distance;
 
   //Moon
   var moonObj = new Planet("rgb(166, 166, 166)", 1);
