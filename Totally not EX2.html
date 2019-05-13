@@ -23,6 +23,7 @@
 	<body>
 		<script src="js/three.js"></script>
 		<script src="js/PointerLockControls.js"></script>
+		<script src="controls.js"></script>
 
 		<div id="blocker">
 			<div id="instructions">
@@ -50,53 +51,9 @@
 			var velocity = new THREE.Vector3();
 			var direction = new THREE.Vector3();
 			var color = new THREE.Color();
-			var blocker = document.getElementById('blocker');
-			var instructions = document.getElementById('instructions');
 
 			var sun_point, earth_point;
 
-			var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
-			if ( havePointerLock ) {
-				var docBody = document.body;
-				var pointerLockStateChange = function ( event ) {
-					if ( document.pointerLockElement === docBody || document.mozPointerLockElement === docBody || document.webkitPointerLockElement === docBody ) {
-						controlsEnabled = true;
-						controls.enabled = true;
-						blocker.style.display = 'none';
-					} else {
-						controls.enabled = false;
-						blocker.style.display = '-webkit-box';
-						blocker.style.display = '-moz-box';
-						blocker.style.display = 'box';
-						instructions.style.display = '';
-					}
-				};
-				// Hook pointer lock state change events
-				document.addEventListener( 'pointerlockchange', pointerLockStateChange, false );
-				document.addEventListener( 'mozpointerlockchange', pointerLockStateChange, false );
-				document.addEventListener( 'webkitpointerlockchange', pointerLockStateChange, false );
-				instructions.addEventListener( 'click', function ( event ) {
-					controlsEnabled = true;
-					instructions.style.display = 'none';
-					// Ask the browser to lock the pointer
-					docBody.requestPointerLock = docBody.requestPointerLock || docBody.mozRequestPointerLock || docBody.webkitRequestPointerLock;
-					if ( /Firefox/i.test( navigator.userAgent ) ) {
-						var fullscreenchange = function ( event ) {
-							if ( document.fullscreenElement === docBody || document.mozFullscreenElement === docBody || document.mozFullScreenElement === docBody ) {
-								document.removeEventListener( 'fullscreenchange', fullscreenchange );
-								document.removeEventListener( 'mozfullscreenchange', fullscreenchange );
-								docBody.requestPointerLock();
-							}
-						};
-						document.addEventListener( 'fullscreenchange', fullscreenchange, false );
-						document.addEventListener( 'mozfullscreenchange', fullscreenchange, false );
-						docBody.requestFullscreen = docBody.requestFullscreen || docBody.mozRequestFullscreen || docBody.mozRequestFullScreen || docBody.webkitRequestFullscreen;
-						docBody.requestFullscreen();
-					} else {
-						docBody.requestPointerLock();
-					}
-				}, false );
-			}
 
 			function init() {
 
@@ -115,79 +72,7 @@
 				controlsEnabled = false;
 				scene.add( controls.getObject() );
 
-				var onKeyDown = function ( event ) {
-
-					switch ( event.keyCode ) {
-
-						case 38: // up
-						case 87: // w
-							moveForward = true;
-							break;
-
-						case 37: // left
-						case 65: // a
-							moveLeft = true;
-              break;
-
-						case 40: // down
-						case 83: // s
-							moveBackward = true;
-							break;
-
-						case 39: // right
-						case 68: // d
-							moveRight = true;
-							break;
-
-						case 32:
-							moveUp = true;
-							break;
-
-						case 16:
-							moveDown = true;
-							break;
-
-					}
-
-				};
-
-				var onKeyUp = function ( event ) {
-
-					switch( event.keyCode ) {
-
-						case 38: // up
-						case 87: // w
-							moveForward = false;
-							break;
-
-						case 37: // left
-						case 65: // a
-							moveLeft = false;
-							break;
-
-						case 40: // down
-						case 83: // s
-							moveBackward = false;
-							break;
-
-						case 39: // right
-						case 68: // d
-							moveRight = false;
-							break;
-
-						case 32:
-							moveUp = false;
-							break;
-
-						case 16:
-							moveDown = false;
-							break;
-
-					}
-				};
-
-				document.addEventListener( 'keydown', onKeyDown, false );
-				document.addEventListener( 'keyup', onKeyUp, false );
+				activateControls();
 
 				var material_box = new THREE.MeshLambertMaterial();
 				material_box.color=  new THREE.Color(0.7,0.7,0.7);
@@ -239,17 +124,6 @@
 
 				var ambientlight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.4);
 				scene.add(ambientlight);
-
-
-
-				/*var spotlight = new THREE.SpotLight(new THREE.Color(1, 1, 1), 0.4);
-				spotlight.position.y = 30;
-				spotlight.target = sun_mesh;
-				spotlight.penumbra = 0.3;
-				scene.add(spotlight);
-				var spotlightHelper = new THREE.SpotLightHelper(spotlight);
-				scene.add(spotlightHelper);
-				*/
 
 				window.addEventListener( 'resize', onWindowResize, false );
 			}
