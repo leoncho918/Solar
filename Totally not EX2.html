@@ -38,9 +38,6 @@
 
 		<script>
 
-			var earth_distance = 100;
-			var moon_distance = 15;
-
 			var camera, scene, renderer, controls, controlsEnabled;
 
 			var moveForward = false;
@@ -54,8 +51,6 @@
 			var velocity = new THREE.Vector3();
 			var direction = new THREE.Vector3();
 			var color = new THREE.Color();
-
-			var sun_point, earth_point;
 
 
 			function init() {
@@ -131,8 +126,8 @@
 
 					prevTime = time;
 
-					sun_point.rotation.y += 0.01;
-					earth_point.rotation.y += 0.03;
+					points[0].rotation.y += 0.01;
+					points[1].rotation.y += 0.03;
 
 				}
 
