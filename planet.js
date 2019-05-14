@@ -1,12 +1,17 @@
-function Planet(radius, colour) {
-  this.type = "Planet";
+var createPlanet = function(radius, colour, orbit, speed) {
 
-  this.geometry = new THREE.SphereGeometry(radius, 32, 32);
-  this.material = new THREE.MeshLambertMaterial()
-  var planet_color = new THREE.Color(colour);
+  var geometry = new THREE.SphereGeometry(radius, 32, 32);
+  var material = new THREE.MeshLambertMaterial({
+    color: new THREE.Color(colour)
+  });
 
-  this.material.color = planet_color;
+  var planet = new THREE.Mesh(geometry, material);
+  planet.userData.orbit = orbit;
+  planet.userData.speed = speed;
 
-  THREE.Mesh.call(this, this.geometry, this.material);
+  planets.push(planet);
+
+  var shape = new THREE.Shape();
+  shape.moveTo(orbit, 0);
+  shape.absarc(0, 0, orbit, 0, 2 * Math.PI, false);
 }
-Planet.prototype = Object.create(THREE.Mesh.prototype);

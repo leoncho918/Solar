@@ -31,8 +31,3 @@ function generatePlanets() {
 
   scene.add(planets[0]);
 }
-
-function movePlanets() {
-  planets[1].position.set(Math.cos(orbits[0]) *  distances[0],
-                          0, Math.sin(orbits[0]) * distances[0]);
-}
