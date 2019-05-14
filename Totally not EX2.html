@@ -53,6 +53,7 @@
 			var velocity = new THREE.Vector3();
 			var direction = new THREE.Vector3();
 			var color = new THREE.Color();
+			var time = 0
 
 
 			function init() {
@@ -129,8 +130,16 @@
 
 					prevTime = time;
 
-					movePlanets();
 				}
+
+				time = Date.now() * 0.0001;
+
+				planets.forEach(function(planet) {
+					var orbit = planet.userData.orbit;
+					var speed = planet.userData.speed;
+					planet.position.x = Math.cos(time * speed) * orbit;
+					planet.position.z = Math.sin(time * speed) * orbit;
+				})
 
 				renderer.render( scene, camera );
 
