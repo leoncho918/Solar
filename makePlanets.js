@@ -20,9 +20,6 @@ function generatePlanets() {
   var earth_mesh = new Planet(3, "rgb(66, 134, 244)");
   var moon_mesh = new Planet(1, "rgb(166, 166, 166)");
 
-  earth_mesh.position.set(Math.cos(orbits[0]) *  distances[0],
-                          0, Math.sin(orbits[0]) * distances[0]);
-
   //Add planets to array
   planets.push(sun_mesh);
   planets.push(earth_mesh);
@@ -33,4 +30,9 @@ function generatePlanets() {
   planets[2].position.set(distances[1], 0 , 0);
 
   scene.add(planets[0]);
+}
+
+function movePlanets() {
+  planets[1].position.set(Math.cos(orbits[0]) *  distances[0],
+                          0, Math.sin(orbits[0]) * distances[0]);
 }
