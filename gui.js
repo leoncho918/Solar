@@ -54,6 +54,13 @@ function buildGui() {
     addItemGui(moon_properties, moon_folder, 'orbit', moon, false, false, 0, 50);
     addItemGui(moon_properties, moon_folder, 'speed', moon, false, false, 0, 100);
   });
+
+  var button = {
+    add: function() {
+      console.log("clicked");
+    }
+  };
+  gui.add(button, 'add');
 }
 
 function addStarGui(properties, folder, name, value, isColour, min, max) {
