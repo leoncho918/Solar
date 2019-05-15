@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>Solar</title>
+		<link rel="stylesheet" href="style.css">
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			html, body {
+				width: 100%;
+				height: 100%;
+			}
+
+			body {
+				background-color: #ffffff;
+				margin: 0;
+				overflow: hidden;
+				font-family: arial;
+			}
+
+		</style>
+	</head>
+	<body>
+		<script src="js/three.js"></script>
+		<script src="js/PointerLockControls.js"></script>
+		<script src="js/dat.gui.min.js"> </script>
+		<script src="controls.js"></script>
+		<script src="makePlanets.js"></script>
+		<script src="planet.js"></script>
+		<script src="moon.js"></script>
+		<script src="star.js"></script>
+		<script src="gui.js"></script>
+
+		<div id="blocker">
+			<div id="instructions">
+				<span style="font-size:40px">Click to play</span>
+				<br />
+				(W, A, S, D = Move, MOUSE = Look around)
+			</div>
+		</div>
+
+		<script>
+
+			var camera, scene, renderer, controls, controlsEnabled;
+
+			var moveForward = false;
+			var moveBackward = false;
+			var moveLeft = false;
+			var moveRight = false;
+			var moveUp = false;
+			var moveDown = false;
+
+			var prevTime = performance.now();
+			var velocity = new THREE.Vector3();
+			var direction = new THREE.Vector3();
+			var color = new THREE.Color();
+			var time = 0
+
+
+			function init() {
+
+				var ratio = window.innerWidth/window.innerHeight;
+				camera = new THREE.PerspectiveCamera(45,ratio,1,100000);
+		    var Pos = new THREE.Vector3(0,0,0);
+		    camera.position.set(Pos.x,Pos.y,Pos.z);
+		    var Dir = new THREE.Vector3(0,0,1);
+		    camera.lookAt(Dir.x,Dir.y,Dir.z);
+
+				scene = new THREE.Scene();
+
+				controls = new THREE.PointerLockControls( camera );
+
+        controls.enabled = false;
+				controlsEnabled = false;
+				scene.add( controls.getObject() );
+
+				activateControls();
+
+				generatePlanets();
+
+				buildGui();
+				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				document.body.appendChild( renderer.domElement );
+
+				var ambientlight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.4);
+				scene.add(ambientlight);
+
+				window.addEventListener( 'resize', onWindowResize, false );
+			}
+
+			function onWindowResize() {
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+			}
+			init();
+			animate();
+
+			function animate() {
+
+				requestAnimationFrame( animate );
+
+				if ( controlsEnabled == true ) {
+
+				 var time = performance.now();
+					var delta =  ( time - prevTime ) / 1000;
+
+					velocity.x -= velocity.x * 10.0 * delta;
+					velocity.z -= velocity.z * 10.0 * delta;
+					velocity.y -= velocity.y * 10.0 * delta;
+
+					direction.z = Number( moveForward ) - Number( moveBackward );
+					direction.x = Number( moveLeft ) - Number( moveRight );
+					direction.y = Number( moveDown ) - Number( moveUp );
+					direction.normalize();
+
+					if ( moveForward || moveBackward )
+						velocity.z -= direction.z * 400.0 * delta;
+
+					if ( moveLeft || moveRight )
+						velocity.x -= direction.x * 400.0 * delta;
+
+					if ( moveUp || moveDown )
+						velocity.y -= direction.y * 400.0 * delta;
+
+					controls.getObject().translateX( velocity.x * delta );
+					controls.getObject().translateZ( velocity.z * delta );
+					controls.getObject().translateY( velocity.y * delta );
+
+					prevTime = time;
+
+				}
+
+				time = Date.now() * 0.0001;
+
+				planets.forEach(function(planet) {
+					var orbit = planet.userData.orbit;
+					var speed = planet.userData.speed;
+					planet.position.x = Math.cos(time * speed) * orbit;
+					planet.position.z = Math.sin(time * speed) * orbit;
+				});
+
+				moons.forEach(function(moon) {
+					var orbit = moon.userData.orbit;
+					var speed = moon.userData.speed;
+					var centreName = moon.userData.centreMass;
+					planets.forEach(function(planet) {
+						if (planet.userData.name == centreName) {
+							moon.position.x = planet.position.x;
+							moon.position.z = planet.position.z;
+						}
+					});
+					moon.position.x = Math.cos(time * speed) * orbit;
+					moon.position.z = Math.sin(time * speed) * orbit;
+				});
+
+				renderer.render( scene, camera );
+
+			}
+
+		</script>
+	</body>
+</html>
