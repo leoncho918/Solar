@@ -27,6 +27,7 @@
 		<script src="controls.js"></script>
 		<script src="makePlanets.js"></script>
 		<script src="planet.js"></script>
+		<script src="moon.js"></script>
 		<script src="star.js"></script>
 		<script src="gui.js"></script>
 
@@ -139,7 +140,21 @@
 					var speed = planet.userData.speed;
 					planet.position.x = Math.cos(time * speed) * orbit;
 					planet.position.z = Math.sin(time * speed) * orbit;
-				})
+				});
+
+				moons.forEach(function(moon) {
+					var orbit = moon.userData.orbit;
+					var speed = moon.userData.speed;
+					var centreName = moon.userData.centreMass;
+					planets.forEach(function(planet) {
+						if (planet.userData.name == centreName) {
+							moon.position.x = planet.position.x;
+							moon.position.z = planet.position.z;
+						}
+					});
+					moon.position.x = Math.cos(time * speed) * orbit;
+					moon.position.z = Math.sin(time * speed) * orbit;
+				});
 
 				renderer.render( scene, camera );
 

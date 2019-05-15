@@ -10,6 +10,9 @@ var createPlanet = function(name, radius, colour, orbit, speed) {
   planet.userData.speed = speed;
   planet.userData.name = name;
 
+  planet.castShadow = true;
+  planet.receiveShadow = true;
+
   planets.push(planet);
 
   var shape = new THREE.Shape();
