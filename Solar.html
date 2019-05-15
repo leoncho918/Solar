@@ -61,16 +61,12 @@
 
 				var ratio = window.innerWidth/window.innerHeight;
 				camera = new THREE.PerspectiveCamera(45,ratio,1,100000);
-		    var Pos = new THREE.Vector3(0,0,0);
-		    camera.position.set(Pos.x,Pos.y,Pos.z);
-		    var Dir = new THREE.Vector3(0,0,1);
-		    camera.lookAt(Dir.x,Dir.y,Dir.z);
 
 				scene = new THREE.Scene();
 
 				controls = new THREE.PointerLockControls( camera );
 
-        controls.enabled = false;
+        		controls.enabled = false;
 				controlsEnabled = false;
 				scene.add( controls.getObject() );
 
@@ -79,6 +75,7 @@
 				generatePlanets();
 
 				buildGui();
+
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
@@ -86,6 +83,10 @@
 
 				var ambientlight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.4);
 				scene.add(ambientlight);
+
+				camera.position.z = 500;
+				camera.position.y = 20;
+				camera.lookAt(stars[0].position);
 
 				window.addEventListener( 'resize', onWindowResize, false );
 			}
@@ -95,6 +96,7 @@
 				camera.updateProjectionMatrix();
 				renderer.setSize( window.innerWidth, window.innerHeight );
 			}
+			
 			init();
 			animate();
 
