@@ -11,6 +11,7 @@ function activateControls() {
         blocker.style.display = 'none';
       } else {
         controls.enabled = false;
+        controlsEnabled = false;
         blocker.style.display = '-webkit-box';
         blocker.style.display = '-moz-box';
         blocker.style.display = 'box';

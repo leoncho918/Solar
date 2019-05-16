@@ -1,4 +1,4 @@
-var gui;
+var gui, planet_properties, moon_properties, add_gui, planets_gui, moons_gui;
 
 function buildGui() {
   gui = new dat.GUI();
@@ -19,10 +19,10 @@ function buildGui() {
 
   });
 
-  var planets_gui = gui.addFolder("Planets");
+  planets_gui = gui.addFolder("Planets");
   planets.forEach(function(planet)
   {
-    var planet_properties = {
+    planet_properties = {
       size: planet.scale.x,
       colour: planet.material.color.getHex(),
       orbit: planet.userData.orbit,
@@ -37,10 +37,10 @@ function buildGui() {
     addItemGui(planet_properties, planet_folder, 'speed', planet, false, false, 0, 100);
   });
 
-  var moons_gui = gui.addFolder("Moons");
+  moons_gui = gui.addFolder("Moons");
   moons.forEach(function(moon)
   {
-    var moon_properties = {
+    moon_properties = {
       size: moon.scale.x,
       colour: moon.material.color.getHex(),
       orbit: moon.userData.orbit,
@@ -55,12 +55,58 @@ function buildGui() {
     addItemGui(moon_properties, moon_folder, 'speed', moon, false, false, 0, 100);
   });
 
-  var button = {
+  var add_params = {
+    item: ""
+  }
+
+  var custom_planet = ["Planet", 2, new THREE.Color("rgb(0,119,190)"), 800, 5];
+
+  var planet_params = {
+    name: "Planet",
+    radius: 2,
+    colour: new THREE.Color("rgb(0,119,190)").getHex(),
+    orbit: 800,
+    speed: 5,
     add: function() {
-      console.log("clicked");
+      createPlanet(custom_planet[0], custom_planet[1], custom_planet[2], custom_planet[3], custom_planet[4]);
+      var planet_folder = planets_gui.addFolder(custom_planet[0]);
+      planet_properties.colour = planets[planets.length-1].material.color.getHex();
+      addItemGui(planet_properties, planet_folder, 'colour', planets[planets.length-1], true, false, 0, 0.1);
+      addItemGui(planet_properties, planet_folder, 'size', planets[planets.length-1], false, true, 0.1, 10);
+      addItemGui(planet_properties, planet_folder, 'orbit', planets[planets.length-1], false, false, 0, 1000);
+      addItemGui(planet_properties, planet_folder, 'speed', planets[planets.length-1], false, false, 0, 100);
+      planets_gui.open();
+      planet_folder.open();
+      add_gui.close();
     }
-  };
-  gui.add(button, 'add');
+  }
+
+  var moon_params = {
+
+  }
+
+  add_gui = gui.addFolder("Add");
+  add_gui.add(add_params, 'item', [ 'Planet', 'Moon' ]).onChange(function(val) {
+    if (val == "Planet") {
+      var planet_folder = add_gui.addFolder('Add Planet');
+      planet_folder.add(planet_params, 'name').onChange(function(val) {
+        custom_planet[0] = val;
+      })
+      planet_folder.add(planet_params, 'radius', 0.1, 5).onChange(function(val) {
+        custom_planet[1] = val;
+      })
+      planet_folder.addColor(planet_params, 'colour').onChange(function(val) {
+        custom_planet[2].setHex(val);
+      })
+      planet_folder.add(planet_params, 'orbit', 0, 1000).onChange(function(val) {
+        custom_planet[3] = val;
+      })
+      planet_folder.add(planet_params, 'speed', 0, 100).onChange(function(val) {
+        custom_planet[4] = val
+      })
+      planet_folder.add(planet_params, 'add');
+    }
+  });
 }
 
 function addStarGui(properties, folder, name, value, isColour, min, max) {
@@ -82,7 +128,7 @@ function addItemGui(properties, folder, name, value, isColour, isSize, min, max)
   if (isColour || isSize) {
     if (isColour) {
       folder.addColor(properties, name, min, max).onChange(function(val) {
-        value.material.color.setHex(val);
+      value.material.color.setHex(val);
       });
     }
     if (isSize) {

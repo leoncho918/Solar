@@ -84,9 +84,7 @@
 				var ambientlight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.4);
 				scene.add(ambientlight);
 
-				camera.position.z = 500;
-				camera.position.y = 20;
-				camera.lookAt(stars[0].position);
+				controls.getObject().translateZ(100);
 
 				window.addEventListener( 'resize', onWindowResize, false );
 			}
