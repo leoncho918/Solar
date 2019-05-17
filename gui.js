@@ -85,27 +85,46 @@ function buildGui() {
 
   }
 
+  var planet_folder, moon_folder;
+  var planet = false;
+  var moon = false;
+
   add_gui = gui.addFolder("Add");
   add_gui.add(add_params, 'item', [ 'Planet', 'Moon' ]).onChange(function(val) {
     if (val == "Planet") {
-      var planet_folder = add_gui.addFolder('Add Planet');
-      planet_folder.add(planet_params, 'name').onChange(function(val) {
-        custom_planet[0] = val;
-      })
-      planet_folder.add(planet_params, 'radius', 0.1, 5).onChange(function(val) {
-        custom_planet[1] = val;
-      })
-      planet_folder.addColor(planet_params, 'colour').onChange(function(val) {
-        custom_planet[2].setHex(val);
-      })
-      planet_folder.add(planet_params, 'orbit', 0, 1000).onChange(function(val) {
-        custom_planet[3] = val;
-      })
-      planet_folder.add(planet_params, 'speed', 0, 100).onChange(function(val) {
-        custom_planet[4] = val
-      })
-      planet_folder.add(planet_params, 'add');
+      if (moon)
+        add_gui.removeFolder(moon_folder);
+      planet = true;
+      moon = false;
+      if (planet) {
+        planet_folder = add_gui.addFolder('Add Planet');
+        planet_folder.add(planet_params, 'name').onChange(function(val) {
+          custom_planet[0] = val;
+        })
+        planet_folder.add(planet_params, 'radius', 0.1, 5).onChange(function(val) {
+          custom_planet[1] = val;
+        })
+        planet_folder.addColor(planet_params, 'colour').onChange(function(val) {
+          custom_planet[2].setHex(val);
+        })
+        planet_folder.add(planet_params, 'orbit', 0, 1000).onChange(function(val) {
+          custom_planet[3] = val;
+        })
+        planet_folder.add(planet_params, 'speed', 0, 100).onChange(function(val) {
+          custom_planet[4] = val
+        })
+        planet_folder.add(planet_params, 'add');
+      }
     }
+  if (val == "Moon") {
+    if (planet)
+      add_gui.removeFolder(planet_folder);
+    planet = false;
+    moon = true;
+    if (moon) {
+
+    }
+  }
   });
 }
 
