@@ -10,6 +10,7 @@ var createStar = function(name, radius, colour, luminosity) {
   star.userData.name = name;
 
   var light = new THREE.PointLight(new THREE.Color(colour), luminosity);
+  light.castShadow = true;;
 
   star.add(light);
 
