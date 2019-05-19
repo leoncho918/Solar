@@ -23,7 +23,7 @@
 	<body>
 		<script src="js/three.js"></script>
 		<script src="js/PointerLockControls.js"></script>
-		<script src="js/dat.gui.min.js"> </script>
+		<script src="js/dat.gui.js"> </script>
 		<script src="controls.js"></script>
 		<script src="makePlanets.js"></script>
 		<script src="planet.js"></script>
@@ -79,14 +79,15 @@
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.shadowMapEnabled = true;
+				renderer.shadowMapHard = true;
+
 				document.body.appendChild( renderer.domElement );
 
 				var ambientlight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.4);
 				scene.add(ambientlight);
 
-				camera.position.z = 500;
-				camera.position.y = 20;
-				camera.lookAt(stars[0].position);
+				controls.getObject().translateZ(100);
 
 				window.addEventListener( 'resize', onWindowResize, false );
 			}
