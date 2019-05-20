@@ -19,6 +19,55 @@ function buildGui() {
 
   });
 
+  buildPlanetsGui();
+
+  buildMoonsGui();
+
+  buildAddGui();
+
+  buildRemoveGui();
+}
+
+function addStarGui(properties, folder, name, value, isColour, min, max) {
+  if (isColour) {
+    folder.addColor(properties, name, min, max).onChange(function(val) {
+      value.material.color.setHex(val);
+      value.material.emissive.setHex(val);
+      value.children[0].color.setHex(val);
+    });
+  }
+  else {
+    folder.add(properties, name, min, max).onChange(function(val) {
+      value.scale.set(val, val, val);
+    });
+  }
+}
+
+function addItemGui(properties, folder, name, value, isColour, isSize, min, max) {
+  if (isColour || isSize) {
+    if (isColour) {
+      folder.addColor(properties, name, min, max).onChange(function(val) {
+      value.material.color.setHex(val);
+      });
+    }
+    if (isSize) {
+      folder.add(properties, name, min, max).onChange(function(val) {
+        value.scale.set(val, val, val);
+      });
+    }
+  }
+  else {
+    folder.add(properties, name, min, max).onChange(function(val)
+      {
+        if (name == 'orbit')
+          value.userData.orbit = val;
+        else
+          value.userData.speed = val;
+      });
+  }
+}
+
+function buildPlanetsGui() {
   planets_gui = gui.addFolder("Planets");
   planets.forEach(function(planet)
   {
@@ -36,7 +85,9 @@ function buildGui() {
     addItemGui(planet_properties, planet_folder, 'orbit', planet, false, false, 0, 1000);
     addItemGui(planet_properties, planet_folder, 'speed', planet, false, false, 0, 100);
   });
+}
 
+function buildMoonsGui() {
   moons_gui = gui.addFolder("Moons");
   moons.forEach(function(moon)
   {
@@ -54,7 +105,69 @@ function buildGui() {
     addItemGui(moon_properties, moon_folder, 'orbit', moon, false, false, 0, 50);
     addItemGui(moon_properties, moon_folder, 'speed', moon, false, false, 0, 100);
   });
+}
 
+function buildRemoveGui() {
+  var remove_params = {
+    item: "",
+    planet: "Mercury",
+    moon: "Moon",
+    remove: function() {
+      if (isPlanet)
+        removePlanet(mesh_name);
+      else
+        removeMoon(mesh_name);
+    }
+  }
+
+  var remove_gui = gui.addFolder("Remove");
+  var remove_planet = null;
+  var remove_moon = null;
+  var remove_button = null;
+  var isPlanet, mesh_name;
+
+  remove_gui.add(remove_params, 'item', ['Planet', 'Moon']).onChange(function(val) {
+    if (remove_button != null)
+      remove_gui.remove(remove_button);
+    if (val == "Planet") {
+      if (remove_moon != null)
+        remove_gui.remove(remove_moon);
+      remove_planet = remove_gui.add(remove_params, 'planet', getPlanets()).onChange(function(val) {
+        isPlanet = true;
+        mesh_name = val;
+      })
+    }
+    else {
+      if (remove_planet != null)
+        remove_gui.remove(remove_planet);
+      remove_moon = remove_gui.add(remove_params, 'moon', getMoons()).onChange(function(val) {
+        isPlanet = false;
+        mesh_name = val;
+      })
+    }
+    remove_button = remove_gui.add(remove_params, 'remove');
+  })
+}
+
+function removePlanet(name) {
+  var index;
+  for(var i=0;i<planets.length;i++) {
+    if(planets[i].userData.name == name)
+      index = i;
+  }
+  planets.splice(i, 1);
+}
+
+function removeMoon(name) {
+  var index;
+  for(var i=0;i<moons.length;i++) {
+    if(moons[i].userData.name == name)
+      index = i;
+  }
+  moons.splice(i, 1);
+}
+
+function buildAddGui() {
   var add_params = {
     item: ""
   }
@@ -68,16 +181,18 @@ function buildGui() {
     orbit: 800,
     speed: 5,
     add: function() {
-      createPlanet(custom_planet[0], custom_planet[1], custom_planet[2], custom_planet[3], custom_planet[4]);
-      var planet_folder = planets_gui.addFolder(custom_planet[0]);
-      planet_properties.colour = planets[planets.length-1].material.color.getHex();
-      addItemGui(planet_properties, planet_folder, 'colour', planets[planets.length-1], true, false, 0, 0.1);
-      addItemGui(planet_properties, planet_folder, 'size', planets[planets.length-1], false, true, 0.1, 10);
-      addItemGui(planet_properties, planet_folder, 'orbit', planets[planets.length-1], false, false, 0, 1000);
-      addItemGui(planet_properties, planet_folder, 'speed', planets[planets.length-1], false, false, 0, 100);
-      planets_gui.open();
-      planet_folder.open();
-      add_gui.close();
+      if (nameFree(custom_planet[0])) {
+        createPlanet(custom_planet[0], custom_planet[1], custom_planet[2], custom_planet[3], custom_planet[4]);
+        var planet_folder = planets_gui.addFolder(custom_planet[0]);
+        planet_properties.colour = planets[planets.length-1].material.color.getHex();
+        addItemGui(planet_properties, planet_folder, 'colour', planets[planets.length-1], true, false, 0, 0.1);
+        addItemGui(planet_properties, planet_folder, 'size', planets[planets.length-1], false, true, 0.1, 10);
+        addItemGui(planet_properties, planet_folder, 'orbit', planets[planets.length-1], false, false, 0, 1000);
+        addItemGui(planet_properties, planet_folder, 'speed', planets[planets.length-1], false, false, 0, 100);
+        planets_gui.open();
+        planet_folder.open();
+        add_gui.close();
+      }
     }
   }
 
@@ -141,10 +256,6 @@ function buildGui() {
       planet = false;
       moon = true;
       if (moon) {
-        var current_planets = [];
-        planets.forEach(function(planet) {
-          current_planets.push(planet.userData.name);
-        })
         moon_folder = add_gui.addFolder('Add Moon');
         moon_folder.add(moon_params, 'name').onChange(function(val) {
           custom_moon[0] = val;
@@ -161,7 +272,7 @@ function buildGui() {
         moon_folder.add(moon_params, 'speed', 1, 20).onChange(function(val) {
           custom_moon[4] = val;
         })
-        moon_folder.add(moon_params, 'orbiting', current_planets).onChange(function(val) {
+        moon_folder.add(moon_params, 'orbiting', getPlanets()).onChange(function(val) {
           custom_moon[5] = val;
         });
         moon_folder.add(moon_params, 'add');
@@ -170,41 +281,25 @@ function buildGui() {
   });
 }
 
-function addStarGui(properties, folder, name, value, isColour, min, max) {
-  if (isColour) {
-    folder.addColor(properties, name, min, max).onChange(function(val) {
-      value.material.color.setHex(val);
-      value.material.emissive.setHex(val);
-      value.children[0].color.setHex(val);
-    });
-  }
-  else {
-    folder.add(properties, name, min, max).onChange(function(val) {
-      value.scale.set(val, val, val);
-    });
-  }
+function getPlanets() {
+  var planet_names = [];
+  planets.forEach(function(planet) {
+    planet_names.push(planet.userData.name);
+  })
+  return planet_names;
 }
 
-function addItemGui(properties, folder, name, value, isColour, isSize, min, max) {
-  if (isColour || isSize) {
-    if (isColour) {
-      folder.addColor(properties, name, min, max).onChange(function(val) {
-      value.material.color.setHex(val);
-      });
-    }
-    if (isSize) {
-      folder.add(properties, name, min, max).onChange(function(val) {
-        value.scale.set(val, val, val);
-      });
-    }
-  }
-  else {
-    folder.add(properties, name, min, max).onChange(function(val)
-      {
-        if (name == 'orbit')
-          value.userData.orbit = val;
-        else
-          value.userData.speed = val;
-      });
-  }
+function getMoons() {
+  var moon_names = [];
+  moons.forEach(function(moon) {
+    moon_names.push(moon.userData.name);
+  })
+  return moon_names;
+}
+
+function nameFree(name) {
+  for (let planet of planets)
+    if (planet.userData.name == name)
+      return false;
+  return true;
 }
