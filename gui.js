@@ -1,4 +1,4 @@
-var gui, planet_properties, moon_properties, add_gui, planets_gui, moons_gui;
+var gui, planet_properties, moon_properties, add_gui, planets_gui, moons_gui, remove_gui, remove_params, remove_planet, remove_moon, remove_button;
 
 function buildGui() {
   gui = new dat.GUI();
@@ -79,6 +79,7 @@ function buildPlanetsGui() {
     }
 
     var planet_folder = planets_gui.addFolder(planet.userData.name);
+    planet.userData.folder = planet_folder;
 
     addItemGui(planet_properties, planet_folder, 'colour', planet, true, false, 0, 0.1);
     addItemGui(planet_properties, planet_folder, 'size', planet, false, true, 0.1, 10);
@@ -99,6 +100,7 @@ function buildMoonsGui() {
     }
 
     var moon_folder = moons_gui.addFolder(moon.userData.name);
+    moon.userData.folder = moon_folder;
 
     addItemGui(moon_properties, moon_folder, 'colour', moon, true, false, 0, 0.1);
     addItemGui(moon_properties, moon_folder, 'size', moon, false, true, 0.1, 5);
@@ -108,40 +110,38 @@ function buildMoonsGui() {
 }
 
 function buildRemoveGui() {
-  var remove_params = {
+  remove_params = {
     item: "",
     planet: "Mercury",
     moon: "Moon",
     remove: function() {
       if (isPlanet)
-        removePlanet(mesh_name);
+        removePlanet(remove_params.planet);
       else
-        removeMoon(mesh_name);
+        removeMoon(remove_params.moon);
     }
   }
 
-  var remove_gui = gui.addFolder("Remove");
-  var remove_planet = null;
-  var remove_moon = null;
-  var remove_button = null;
-  var isPlanet, mesh_name;
+  remove_gui = gui.addFolder("Remove");
+  remove_planet = null;
+  remove_moon = null;
+  remove_button = null;
+  var isPlanet;
 
   remove_gui.add(remove_params, 'item', ['Planet', 'Moon']).onChange(function(val) {
     if (remove_button != null)
       remove_gui.remove(remove_button);
     if (val == "Planet") {
+      isPlanet = true;
       if (remove_moon != null)
         remove_gui.remove(remove_moon);
-      remove_planet = remove_gui.add(remove_params, 'planet', getPlanets()).onChange(function(val) {
-        isPlanet = true;
-        mesh_name = val;
-      })
+      remove_planet = remove_gui.add(remove_params, 'planet', getPlanets()).listen();
     }
     else {
+      isPlanet = false;
       if (remove_planet != null)
         remove_gui.remove(remove_planet);
       remove_moon = remove_gui.add(remove_params, 'moon', getMoons()).onChange(function(val) {
-        isPlanet = false;
         mesh_name = val;
       })
     }
@@ -150,21 +150,39 @@ function buildRemoveGui() {
 }
 
 function removePlanet(name) {
-  var index;
+  var index = null;
   for(var i=0;i<planets.length;i++) {
     if(planets[i].userData.name == name)
       index = i;
   }
-  planets.splice(i, 1);
+  if(index!=null) {
+    var folder = planets[index].userData.folder;
+    planets_gui.removeFolder(folder);
+    planets.splice(index, 1);
+  }
+  remove_params.planet = "";
+  remove_gui.remove(remove_planet);
+  remove_gui.remove(remove_button);
+  remove_planet = remove_gui.add(remove_params, 'planet', getPlanets()).listen();
+  remove_button = remove_gui.add(remove_params, 'remove');
 }
 
 function removeMoon(name) {
-  var index;
+  var index = null;
   for(var i=0;i<moons.length;i++) {
     if(moons[i].userData.name == name)
       index = i;
   }
-  moons.splice(i, 1);
+  if(index!=null) {
+    var folder = moons[index].userData.folder;
+    moons_gui.removeFolder(folder);
+    moons.splice(index, 1);
+  }
+  remove_params.moon = "";
+  remove_gui.remove(remove_moon);
+  remove_gui.remove(remove_button);
+  remove_moon = remove_gui.add(remove_params, 'moon', getMoons()).listen();
+  remove_button = remove_gui.add(remove_params, 'remove');
 }
 
 function buildAddGui() {
@@ -192,6 +210,7 @@ function buildAddGui() {
         planets_gui.open();
         planet_folder.open();
         add_gui.close();
+        removePlanet("");
       }
     }
   }
@@ -216,6 +235,7 @@ function buildAddGui() {
       moons_gui.open();
       moon_folder.open();
       add_gui.close();
+      removeMoon("");
     }
   }
 
