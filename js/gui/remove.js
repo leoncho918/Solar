@@ -51,11 +51,12 @@ function buildRemoveGui() {
       planets.splice(index, 1);
     }
     remove_params.planet = "";
-    remove_gui.remove(remove_planet);
-    remove_gui.remove(remove_button);
-    remove_planet = remove_gui.add(remove_params, 'planet', getPlanets()).listen();
-    remove_button = remove_gui.add(remove_params, 'remove');
-    
+    if (remove_planet!=null) {
+      remove_gui.remove(remove_planet);
+      remove_gui.remove(remove_button);
+      remove_planet = remove_gui.add(remove_params, 'planet', getPlanets()).listen();
+      remove_button = remove_gui.add(remove_params, 'remove');
+    }
   }
   
   function removeMoon(name) {
@@ -71,9 +72,11 @@ function buildRemoveGui() {
       moons_gui.removeFolder(folder);
       moons.splice(index, 1);
     }
-    remove_params.moon = "";
-    remove_gui.remove(remove_moon);
-    remove_gui.remove(remove_button);
-    remove_moon = remove_gui.add(remove_params, 'moon', getMoons()).listen();
-    remove_button = remove_gui.add(remove_params, 'remove');
+    if (remove_moon!=null) {
+      remove_params.moon = "";
+      remove_gui.remove(remove_moon);
+      remove_gui.remove(remove_button);
+      remove_moon = remove_gui.add(remove_params, 'moon', getMoons()).listen();
+      remove_button = remove_gui.add(remove_params, 'remove');
+    }
   }

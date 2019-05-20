@@ -86,9 +86,17 @@ function getMoons() {
   return moon_names;
 }
 
-function nameFree(name) {
-  for (let planet of planets)
-    if (planet.userData.name == name)
-      return false;
-  return true;
+function nameFree(name, isPlanet) {
+  if (isPlanet) {
+    for (let planet of planets)
+      if (planet.userData.name == name)
+        return false;
+      return true;
+  }
+  else {
+    for (let moon of moons)
+      if (moon.userData.name == name)
+        return false;
+      return true;
+  }
 }

@@ -51,7 +51,7 @@ function addStarGui(properties, folder, name, value, isColour, min, max) {
       orbit: 800,
       speed: 5,
       add: function() {
-        if (nameFree(custom_planet[0])) {
+        if (nameFree(custom_planet[0], true)) {
           createPlanet(custom_planet[0], custom_planet[1], custom_planet[2], custom_planet[3], custom_planet[4]);
           var planet_folder = planets_gui.addFolder(custom_planet[0]);
           planet_properties.colour = planets[planets.length-1].material.color.getHex();
@@ -59,6 +59,7 @@ function addStarGui(properties, folder, name, value, isColour, min, max) {
           addItemGui(planet_properties, planet_folder, 'size', planets[planets.length-1], false, true, 0.1, 10);
           addItemGui(planet_properties, planet_folder, 'orbit', planets[planets.length-1], false, false, 0, 1000);
           addItemGui(planet_properties, planet_folder, 'speed', planets[planets.length-1], false, false, 0, 100);
+          planets[planets.length-1].userData.folder = planet_folder;
           planets_gui.open();
           planet_folder.open();
           add_gui.close();
@@ -77,17 +78,20 @@ function addStarGui(properties, folder, name, value, isColour, min, max) {
       speed: 8,
       orbiting: "Jupiter",
       add: function() {
-        createMoon(custom_moon[0], custom_moon[1], custom_moon[2], custom_moon[3], custom_moon[4], custom_moon[5]);
-        var moon_folder = moons_gui.addFolder(custom_moon[0]);
-        moon_properties.colour = moons[moons.length-1].material.color.getHex();
-        addItemGui(moon_properties, moon_folder, 'colour', moons[moons.length-1], true, false, 0, 0.1);
-        addItemGui(moon_properties, moon_folder, 'size', moons[moons.length-1], false, true, 0.1, 5);
-        addItemGui(moon_properties, moon_folder, 'orbit', moons[moons.length-1], false, false, 0, 50);
-        addItemGui(moon_properties, moon_folder, 'speed', moons[moons.length-1], false, false, 0, 100);
-        moons_gui.open();
-        moon_folder.open();
-        add_gui.close();
-        removeMoon("");
+        if (nameFree(custom_moon[0], false)) {
+          createMoon(custom_moon[0], custom_moon[1], custom_moon[2], custom_moon[3], custom_moon[4], custom_moon[5]);
+          var moon_folder = moons_gui.addFolder(custom_moon[0]);
+          moon_properties.colour = moons[moons.length-1].material.color.getHex();
+          addItemGui(moon_properties, moon_folder, 'colour', moons[moons.length-1], true, false, 0, 0.1);
+          addItemGui(moon_properties, moon_folder, 'size', moons[moons.length-1], false, true, 0.1, 5);
+          addItemGui(moon_properties, moon_folder, 'orbit', moons[moons.length-1], false, false, 0, 50);
+          addItemGui(moon_properties, moon_folder, 'speed', moons[moons.length-1], false, false, 0, 100);
+          moons[moons.length-1].userData.folder = moon_folder;
+          moons_gui.open();
+          moon_folder.open();
+          add_gui.close();
+          removeMoon("");
+        }
       }
     }
   
