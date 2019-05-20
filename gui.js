@@ -158,6 +158,7 @@ function removePlanet(name) {
   if(index!=null) {
     var folder = planets[index].userData.folder;
     planets_gui.removeFolder(folder);
+    scene.remove(planets[index]);
     planets.splice(index, 1);
   }
   remove_params.planet = "";
@@ -165,6 +166,7 @@ function removePlanet(name) {
   remove_gui.remove(remove_button);
   remove_planet = remove_gui.add(remove_params, 'planet', getPlanets()).listen();
   remove_button = remove_gui.add(remove_params, 'remove');
+  
 }
 
 function removeMoon(name) {
@@ -175,6 +177,8 @@ function removeMoon(name) {
   }
   if(index!=null) {
     var folder = moons[index].userData.folder;
+    var planet = moons[index].userData.centreMass;
+    planet.remove(moons[index]);
     moons_gui.removeFolder(folder);
     moons.splice(index, 1);
   }

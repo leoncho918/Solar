@@ -14,8 +14,10 @@ var createMoon = function(name, radius, colour, orbit, speed, centreMass) {
   moon.receiveShadow = true;
   
   planets.forEach(function(planet) {
-    if (planet.userData.name == centreMass)
+    if (planet.userData.name == centreMass) {
+        moon.userData.centreMass = planet;
         planet.add(moon);
+    }
   })
 
   moons.push(moon);
