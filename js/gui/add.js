@@ -38,7 +38,7 @@ function addStarGui(properties, folder, name, value, isColour, min, max) {
   }
 
   function addButton(properties, folder, name) {
-    folder.add(properties, name);
+    return folder.add(properties, name);
   }
 
   function buildAddGui() {

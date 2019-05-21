@@ -37,12 +37,15 @@ function buildPlanetsGui() {
       colour: planet.material.color.getHex(),
       orbit: planet.userData.orbit,
       speed: planet.userData.speed,
-      go: function() {
-        camera_position = controls.position;
-        controls.position = planet.position;
+      view: function() {
+        scene.add(planet.userData.path);
+        planet_folder.remove(planet.userData.add_button);
+        planet.userData.remove_button = addButton(this, planet_folder, 'hide');
       },
-      return: function() {
-        camera.position = camera_position;
+      hide: function() {
+        scene.remove(planet.userData.path);
+        planet_folder.remove(planet.userData.remove_button);
+        planet.userData.add_button = addButton(this, planet_folder, 'view');
       }
     }
 
@@ -53,7 +56,7 @@ function buildPlanetsGui() {
     addItemGui(planet_properties, planet_folder, 'size', planet, false, true, 0.1, 10);
     addItemGui(planet_properties, planet_folder, 'orbit', planet, false, false, 0, 1000);
     addItemGui(planet_properties, planet_folder, 'speed', planet, false, false, 0, 100);
-    addButton(planet_properties, planet_folder, 'go');
+    planet.userData.add_button = addButton(planet_properties, planet_folder, 'view');
   });
 }
 
@@ -66,8 +69,15 @@ function buildMoonsGui() {
       colour: moon.material.color.getHex(),
       orbit: moon.userData.orbit,
       speed: moon.userData.speed,
-      go: function() {
-
+      view: function() {
+        moon.userData.centreMass.add(moon.userData.path);
+        moon_folder.remove(moon.userData.add_button);
+        moon.userData.remove_button = addButton(this, moon_folder, 'hide');
+      },
+      hide: function() {
+        moon.userData.centreMass.remove(moon.userData.path);
+        moon_folder.remove(moon.userData.remove_button);
+        moon.userData.add_button = addButton(this, moon_folder, 'view');
       }
     }
 
@@ -78,7 +88,7 @@ function buildMoonsGui() {
     addItemGui(moon_properties, moon_folder, 'size', moon, false, true, 0.1, 5);
     addItemGui(moon_properties, moon_folder, 'orbit', moon, false, false, 0, 50);
     addItemGui(moon_properties, moon_folder, 'speed', moon, false, false, 0, 100);
-    addButton(moon_properties, moon_folder, 'go');
+    moon.userData.add_button = addButton(moon_properties, moon_folder, 'view');
   });
 }
 
