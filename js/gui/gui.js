@@ -36,7 +36,10 @@ function buildPlanetsGui() {
       size: planet.scale.x,
       colour: planet.material.color.getHex(),
       orbit: planet.userData.orbit,
-      speed: planet.userData.speed
+      speed: planet.userData.speed,
+      go: function() {
+
+      }
     }
 
     var planet_folder = planets_gui.addFolder(planet.userData.name);
@@ -46,6 +49,7 @@ function buildPlanetsGui() {
     addItemGui(planet_properties, planet_folder, 'size', planet, false, true, 0.1, 10);
     addItemGui(planet_properties, planet_folder, 'orbit', planet, false, false, 0, 1000);
     addItemGui(planet_properties, planet_folder, 'speed', planet, false, false, 0, 100);
+    addButton(planet_properties, planet_folder, 'go');
   });
 }
 

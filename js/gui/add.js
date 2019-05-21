@@ -37,6 +37,10 @@ function addStarGui(properties, folder, name, value, isColour, min, max) {
     }
   }
 
+  function addButton(properties, folder, name) {
+    folder.add(properties, name);
+  }
+
   function buildAddGui() {
     var add_params = {
       item: ""
@@ -59,6 +63,7 @@ function addStarGui(properties, folder, name, value, isColour, min, max) {
           addItemGui(planet_properties, planet_folder, 'size', planets[planets.length-1], false, true, 0.1, 10);
           addItemGui(planet_properties, planet_folder, 'orbit', planets[planets.length-1], false, false, 0, 1000);
           addItemGui(planet_properties, planet_folder, 'speed', planets[planets.length-1], false, false, 0, 100);
+          addButton(planet_properties, planet_folder, 'go');
           planets[planets.length-1].userData.folder = planet_folder;
           planets_gui.open();
           planet_folder.open();
