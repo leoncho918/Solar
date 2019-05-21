@@ -1,4 +1,4 @@
-var gui, planet_properties, moon_properties, add_gui, planets_gui, moons_gui, remove_gui, remove_params, remove_planet, remove_moon, remove_button;
+var gui, planet_properties, moon_properties, add_gui, planets_gui, moons_gui, remove_gui, remove_params, remove_planet, remove_moon, remove_button, camera_position;
 
 function buildGui() {
   gui = new dat.GUI();
@@ -38,7 +38,11 @@ function buildPlanetsGui() {
       orbit: planet.userData.orbit,
       speed: planet.userData.speed,
       go: function() {
-
+        camera_position = controls.position;
+        controls.position = planet.position;
+      },
+      return: function() {
+        camera.position = camera_position;
       }
     }
 
@@ -61,7 +65,10 @@ function buildMoonsGui() {
       size: moon.scale.x,
       colour: moon.material.color.getHex(),
       orbit: moon.userData.orbit,
-      speed: moon.userData.speed
+      speed: moon.userData.speed,
+      go: function() {
+
+      }
     }
 
     var moon_folder = moons_gui.addFolder(moon.userData.name);
@@ -71,6 +78,7 @@ function buildMoonsGui() {
     addItemGui(moon_properties, moon_folder, 'size', moon, false, true, 0.1, 5);
     addItemGui(moon_properties, moon_folder, 'orbit', moon, false, false, 0, 50);
     addItemGui(moon_properties, moon_folder, 'speed', moon, false, false, 0, 100);
+    addButton(moon_properties, moon_folder, 'go');
   });
 }
 
