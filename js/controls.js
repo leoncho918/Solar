@@ -22,7 +22,7 @@ function activateControls() {
     document.addEventListener( 'pointerlockchange', pointerLockStateChange, false );
     document.addEventListener( 'mozpointerlockchange', pointerLockStateChange, false );
     document.addEventListener( 'webkitpointerlockchange', pointerLockStateChange, false );
-    instructions.addEventListener( 'click', function ( event ) {
+    blocker.addEventListener( 'click', function ( event ) {
       controlsEnabled = true;
       instructions.style.display = 'none';
       // Ask the browser to lock the pointer
