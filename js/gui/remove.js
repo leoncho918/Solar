@@ -47,6 +47,7 @@ function buildRemoveGui() {
     if(index!=null) {
       var folder = planets[index].userData.folder;
       planets_gui.removeFolder(folder);
+      scene.remove(planets[index].userData.path);
       scene.remove(planets[index]);
       planets.splice(index, 1);
     }
@@ -69,6 +70,7 @@ function buildRemoveGui() {
       var folder = moons[index].userData.folder;
       var planet = moons[index].userData.centreMass;
       planet.remove(moons[index]);
+      planet.remove(moons[index].userData.path);
       moons_gui.removeFolder(folder);
       moons.splice(index, 1);
     }
