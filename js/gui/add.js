@@ -49,7 +49,7 @@ function addStarGui(properties, folder, name, value, isColour, min, max) {
     var custom_planet = ["Planet", 2, new THREE.Color("rgb(0,119,190)"), 800, 5];
   
     var planet_params = {
-      name: "Planet",
+      name: "Pluto",
       radius: 2,
       colour: new THREE.Color("rgb(0,119,190)").getHex(),
       orbit: 800,
@@ -63,7 +63,7 @@ function addStarGui(properties, folder, name, value, isColour, min, max) {
           addItemGui(planet_properties, planet_folder, 'size', planets[planets.length-1], false, true, 0.1, 10);
           addItemGui(planet_properties, planet_folder, 'orbit', planets[planets.length-1], false, false, 0, 1000);
           addItemGui(planet_properties, planet_folder, 'speed', planets[planets.length-1], false, false, 0, 100);
-          addButton(planet_properties, planet_folder, 'go');
+          addButton(planet_properties, planet_folder, 'view');
           planets[planets.length-1].userData.folder = planet_folder;
           planets_gui.open();
           planet_folder.open();
@@ -76,7 +76,7 @@ function addStarGui(properties, folder, name, value, isColour, min, max) {
     var custom_moon = ["Moon", 0.25, new THREE.Color("rgb(165,129,0)"), 10, 8, "Jupiter"];
   
     var moon_params = {
-      name: "Moon",
+      name: "Titan",
       radius: 0.25,
       colour: new THREE.Color("rgb(165,129,0)").getHex(),
       orbit: 10,

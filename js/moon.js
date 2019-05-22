@@ -29,7 +29,7 @@ var createMoon = function(name, radius, colour, orbit, speed, centreMass) {
   var spacedPoints = shape.createSpacedPointsGeometry(128);
   spacedPoints.rotateX(THREE.Math.degToRad(-90));
   var path = new THREE.Line(spacedPoints, new THREE.LineBasicMaterial({
-    color: "yellow"
+    color: "white"
   }));
   
   moon.userData.path = path;

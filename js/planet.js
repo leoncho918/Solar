@@ -23,7 +23,7 @@ var createPlanet = function(name, radius, colour, orbit, speed) {
   var spacedPoints = shape.createSpacedPointsGeometry(128);
   spacedPoints.rotateX(THREE.Math.degToRad(-90));
   var path = new THREE.Line(spacedPoints, new THREE.LineBasicMaterial({
-    color: "yellow"
+    color: "white"
   }));
   
   planet.userData.path = path;
