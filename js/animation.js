@@ -63,7 +63,11 @@ function showInfo(info_name, info_category, info_desc, colour) {
     hideStartUp();
     hideInfo();
     switch(info_name) {
-        case "Sun"||"Moon":
+        case "Sun":
+            d_name.innerHTML = "The <span id='name_keyword'>" + info_name + "</span>";
+            d_desc.innerHTML = "The <span id='desc_keyword'>" + info_name + "</span>" + " " + info_desc;
+            break;
+        case "Moon":
             d_name.innerHTML = "The <span id='name_keyword'>" + info_name + "</span>";
             d_desc.innerHTML = "The <span id='desc_keyword'>" + info_name + "</span>" + " " + info_desc;
             break;
