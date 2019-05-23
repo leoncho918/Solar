@@ -9,6 +9,8 @@ function activateControls() {
         controlsEnabled = true;
         controls.enabled = true;
         hideStartUp();
+        hideInfo();
+        removeHide();
       } else {
         controls.enabled = false;
         controlsEnabled = false;
@@ -25,6 +27,8 @@ function activateControls() {
     blocker.addEventListener( 'click', function ( event ) {
       controlsEnabled = true;
       hideStartUp();
+      hideInfo();
+      removeHide();
       // Ask the browser to lock the pointer
       docBody.requestPointerLock = docBody.requestPointerLock || docBody.mozRequestPointerLock || docBody.webkitRequestPointerLock;
       if ( /Firefox/i.test( navigator.userAgent ) ) {

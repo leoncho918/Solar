@@ -1,4 +1,4 @@
-var createPlanet = function(name, description, radius, colour, orbit, speed) {
+var createPlanet = function(name, description, category, radius, colour, orbit, speed) {
 
   var geometry = new THREE.SphereGeometry(radius, 32, 32);
   var material = new THREE.MeshLambertMaterial({
@@ -11,6 +11,8 @@ var createPlanet = function(name, description, radius, colour, orbit, speed) {
   planet.userData.speed = speed;
   planet.userData.name = name;
   planet.userData.desc = description;
+  planet.userData.category = category;
+  planet.userData.colour = colour;
 
   planet.castShadow = true;
   planet.receiveShadow = true;

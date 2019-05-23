@@ -1,52 +1,60 @@
 function addStarGui(properties, folder, name, value, isColour, min, max) {
-    if (isColour) {
+  switch(name) {
+    case "colour":
       folder.addColor(properties, name, min, max).onChange(function(val) {
         value.material.color.setHex(val);
         value.material.emissive.setHex(val);
         value.children[0].color.setHex(val);
       });
-    }
-    else {
+      break;
+    case "size":
       folder.add(properties, name, min, max).onChange(function(val) {
         value.scale.set(val, val, val);
       });
-    }
+      break;
+    case "luminosity":
+      folder.add(properties, name, min, max).onChange(function(val) {
+        value.userData.light.intensity = val;
+      })
+      break;
   }
+}
   
-  function addItemGui(properties, folder, name, value, isColour, isSize, isMoon, min, max) {
-    if (isColour || isSize) {
-      if (isColour) {
+  function addItemGui(properties, folder, name, value, isMoon, min, max) {
+    switch(name) {
+      case "colour":
         folder.addColor(properties, name, min, max).onChange(function(val) {
-        value.material.color.setHex(val);
+          value.material.color.setHex(val);
         });
-      }
-      if (isSize) {
+        break;
+      case "size":
         folder.add(properties, name, min, max).onChange(function(val) {
           value.scale.set(val, val, val);
         });
-      }
-    }
-    else {
-      folder.add(properties, name, min, max).onChange(function(val)
+        break;
+      case "orbit":
+        folder.add(properties, name, min, max).onChange(function(val)
         {
-          if (name == 'orbit') {
-            value.userData.orbit = val;
-            if (path_on) {
-              if (path!=undefined)
-                if (isMoon)
-                  value.userData.centreMass.remove(path);
-                else
-                  scene.remove(path);
-              path = drawPath(val);
+          value.userData.orbit = val;
+          if (path_on) {
+            if (path!=undefined)
               if (isMoon)
-                value.userData.centreMass.add(path);
+                value.userData.centreMass.remove(path);
               else
-                scene.add(path);
-            }
+                scene.remove(path);
+            path = drawPath(val);
+            if (isMoon)
+              value.userData.centreMass.add(path);
+            else
+              scene.add(path);
           }
-          else
-            value.userData.speed = val;
         });
+        break;
+      case "speed":
+        folder.add(properties, name, min, max).onChange(function(val) {
+          value.userData.speed = val;
+        });
+        break;
     }
   }
 

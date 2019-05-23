@@ -1,4 +1,4 @@
-var createMoon = function(name, description, radius, colour, orbit, speed, centreMass) {
+var createMoon = function(name, description, category, radius, colour, orbit, speed, centreMass) {
 
   var geometry = new THREE.SphereGeometry(radius, 32, 32);
   var material = new THREE.MeshLambertMaterial({
@@ -10,6 +10,8 @@ var createMoon = function(name, description, radius, colour, orbit, speed, centr
   moon.userData.speed = speed;
   moon.userData.name = name;
   moon.userData.desc = description;
+  moon.userData.category = category;
+  moon.userData.colour = colour;
 
   moon.castShadow = true;
   moon.receiveShadow = true;

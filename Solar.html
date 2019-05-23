@@ -37,7 +37,8 @@
 				</p>
 			</div>
 			<div id="info">
-				<h1 id="name"></h1>
+				<p id="name"></p>
+				<p id="category"></p>
 				<p id="desc"></p>
 			</div>
 		</div>
@@ -72,6 +73,11 @@
         		controls.enabled = false;
 				controlsEnabled = false;
 				scene.add( controls.getObject() );
+
+				info = document.getElementById('info');
+				d_name = document.getElementById('name');
+				d_category = document.getElementById('category');
+				d_desc = document.getElementById('desc');
 
 				showStartUp();
 

@@ -1,4 +1,4 @@
-var createStar = function(name, description, radius, colour, luminosity) {
+var createStar = function(name, description, category, radius, colour, luminosity) {
 
   var geometry = new THREE.SphereGeometry(radius, 32, 32);
   var material = new THREE.MeshLambertMaterial({
@@ -9,9 +9,13 @@ var createStar = function(name, description, radius, colour, luminosity) {
   var star = new THREE.Mesh(geometry, material);
   star.userData.name = name;
   star.userData.desc = description;
+  star.userData.category = category;
+  star.userData.colour = colour;
 
   var light = new THREE.PointLight(new THREE.Color(colour), luminosity);
   light.castShadow = true;;
+
+  star.userData.light = light;
 
   star.add(light);
 
