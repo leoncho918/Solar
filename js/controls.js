@@ -8,14 +8,16 @@ function activateControls() {
       if ( document.pointerLockElement === docBody || document.mozPointerLockElement === docBody || document.webkitPointerLockElement === docBody ) {
         controlsEnabled = true;
         controls.enabled = true;
-        blocker.style.display = 'none';
+        hideStartUp();
+        hideInfo();
+        removeHide();
       } else {
         controls.enabled = false;
         controlsEnabled = false;
         blocker.style.display = '-webkit-box';
         blocker.style.display = '-moz-box';
         blocker.style.display = 'box';
-        instructions.style.display = '';
+        showStartUp();
       }
     };
     // Hook pointer lock state change events
@@ -24,7 +26,9 @@ function activateControls() {
     document.addEventListener( 'webkitpointerlockchange', pointerLockStateChange, false );
     blocker.addEventListener( 'click', function ( event ) {
       controlsEnabled = true;
-      instructions.style.display = 'none';
+      hideStartUp();
+      hideInfo();
+      removeHide();
       // Ask the browser to lock the pointer
       docBody.requestPointerLock = docBody.requestPointerLock || docBody.mozRequestPointerLock || docBody.webkitRequestPointerLock;
       if ( /Firefox/i.test( navigator.userAgent ) ) {
