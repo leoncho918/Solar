@@ -8,26 +8,40 @@
 	</head>
 	<link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
 	<body>
-		<script src="js/libraries/three.js"></script>
-		<script src="js/libraries/PointerLockControls.js"></script>
-		<script src="js/libraries/dat.gui.js"> </script>
-		<script src="js/controls.js"></script>
-		<script src="js/makePlanets.js"></script>
-		<script src="js/planet.js"></script>
-		<script src="js/moon.js"></script>
-		<script src="js/star.js"></script>
-		<script src="js/gui/gui.js"></script>
-		<script src="js/gui/add.js"></script>
-		<script src="js/gui/remove.js"></script>
+
+			<script src="js/libraries/three.js"></script>
+			<script src="js/libraries/PointerLockControls.js"></script>
+			<script src="js/libraries/dat.gui.js"></script>
+			<script src="js/libraries/jquery.min.js"></script>
+			<script src="js/libraries/TweenMax.min.js"></script>
+			<script src="js/controls.js"></script>
+			<script src="js/makePlanets.js"></script>
+			<script src="js/planet.js"></script>
+			<script src="js/moon.js"></script>
+			<script src="js/star.js"></script>
+			<script src="js/gui/gui.js"></script>
+			<script src="js/gui/add.js"></script>
+			<script src="js/gui/remove.js"></script>
+			<script src="js/animation.js"></script>
 
 		<div id="blocker">
-			<div id="instructions">
-				<span style="font-size:40px">Click to Start</span>
-				<br />
-				(W, A, S, D = Move, MOUSE = Look around)
+			<img id = "border" src="img/border.png">
+			<div id="startMessage">
+				<p id="first">Welcome to <span id="bold">Solar</span></p>
+				<p id="second">Click to Start <br /> <br />
+					<span id="instructions">
+							W, A, S, D = Move <br />
+							SPACE, SHIFT = Up and Down <br />
+							MOUSE = Look Around
+					</span>
+				</p>
+			</div>
+			<div id="info">
+				<h1 id="name"></h1>
+				<p id="desc"></p>
 			</div>
 		</div>
-
+		
 		<script>
 
 			var camera, scene, renderer, controls, controlsEnabled;
@@ -59,6 +73,8 @@
 				controlsEnabled = false;
 				scene.add( controls.getObject() );
 
+				showStartUp();
+
 				activateControls();
 
 				generatePlanets();
@@ -73,7 +89,7 @@
 
 				document.body.appendChild( renderer.domElement );
 
-				var ambientlight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.4);
+				var ambientlight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.5);
 				scene.add(ambientlight);
 
 				controls.getObject().translateZ(100);
