@@ -196,6 +196,11 @@ function removeHide() {
     }
     if (moon.userData.add_button==undefined)
       moon.userData.add_button = addButton(moon.userData.properties, moon.userData.folder, 'view');
+    if (path_on) {
+      scene.remove(path);
+      moon.userData.centreMass.remove(path);
+      path_on = false;
+    }
   });
   stars.forEach(function(star) {
     if (star.userData.remove_button!=undefined) {

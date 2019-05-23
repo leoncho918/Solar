@@ -25,6 +25,7 @@ function addStarGui(properties, folder, name, value, isColour, min, max) {
       case "colour":
         folder.addColor(properties, name, min, max).onChange(function(val) {
           value.material.color.setHex(val);
+          value.userData.colour = convertRGB(value.material.color);
         });
         break;
       case "size":
@@ -182,4 +183,12 @@ function addStarGui(properties, folder, name, value, isColour, min, max) {
         }
       }
     });
+  }
+
+  function convertRGB(colour) {
+    var r = colour.r*255;
+    var g = colour.g*255;
+    var b = colour.b*255;
+
+    return "rgb("+r+","+g+","+b+")";
   }
