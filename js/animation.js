@@ -77,7 +77,10 @@ function showInfo(info_name, info_category, info_desc, colour) {
             break;
         default:
             d_name.innerHTML = "<span id='name_keyword'>" + info_name + "</span>";
-            d_desc.innerHTML = "<span id='desc_keyword'>" + info_name + "</span>" + " " + info_desc;
+            if (info_desc=="")
+                d_desc.innerHTML = "";
+            else
+                d_desc.innerHTML = "<span id='desc_keyword'>" + info_name + "</span>" + " " + info_desc;
             break;
     }
     switch(info_category) {
@@ -93,18 +96,25 @@ function showInfo(info_name, info_category, info_desc, colour) {
         case "Natural Satellite":
             d_category.innerHTML = "<span id='category_keyword'>Natural</span> Satellite";
             break;
+        default:
+        d_category.innerHTML = "";
+            break;
     }
     var item_name = document.getElementById('name_keyword');
     item_name.style.color = colour;
     item_name.style.fontWeight = 800;
     var item_category = document.getElementById('category_keyword');
-    item_category.style.color = colour;
-    item_category.style.fontWeight = 800;
+    if (item_category!=null) {
+        item_category.style.color = colour;
+        item_category.style.fontWeight = 800;
+    }
     var item_desc = document.getElementById('desc_keyword');
-    item_desc.style.color = colour;
-    item_desc.style.fontWeight = 800;
-    if (info_name == "Saturn") {
-        var item_desc2 = document.getElementById('desc_keyword2');
+    if (item_desc!=null) {
+        item_desc.style.color = colour;
+        item_desc.style.fontWeight = 800;
+    }
+    var item_desc2 = document.getElementById('desc_keyword2');
+    if (item_desc2!=null) {
         item_desc2.style.color = colour;
         item_desc2.style.fontWeight = 800;
     }

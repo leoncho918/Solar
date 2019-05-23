@@ -81,17 +81,17 @@ function addStarGui(properties, folder, name, value, isColour, min, max) {
       item: ""
     }
   
-    var custom_planet = ["Pluto", 2, new THREE.Color("rgb(0,119,190)"), 800, 2];
+    var custom_planet = ["Pluto", "", "", 2, "rgb(0,119,190)", 800, 2];
   
     var planet_params = {
       name: "Pluto",
       radius: 2,
-      colour: new THREE.Color("rgb(0,119,190)").getHex(),
+      colour: "rgb(0,119,190)",
       orbit: 800,
       speed: 2,
       add: function() {
         if (nameFree(custom_planet[0], true)) {
-          createPlanet(custom_planet[0], custom_planet[1], custom_planet[2], custom_planet[3], custom_planet[4]);
+          createPlanet(custom_planet[0], custom_planet[1], custom_planet[2], custom_planet[3], custom_planet[4], custom_planet[5], custom_planet[6]);
           refreshPlanets();
           planets_gui.open();
           planets[planets.length-1].userData.folder.open();
@@ -101,18 +101,18 @@ function addStarGui(properties, folder, name, value, isColour, min, max) {
       }
     }
   
-    var custom_moon = ["Titan", 0.25, new THREE.Color("rgb(165,129,0)"), 10, 8, "Jupiter"];
+    var custom_moon = ["Titan", "", "", 0.25, "rgb(165,129,0)", 10, 8, "Jupiter"];
   
     var moon_params = {
       name: "Titan",
       radius: 0.25,
-      colour: new THREE.Color("rgb(165,129,0)").getHex(),
+      colour: "rgb(165,129,0)",
       orbit: 10,
       speed: 8,
       orbiting: "Jupiter",
       add: function() {
         if (nameFree(custom_moon[0], false)) {
-          createMoon(custom_moon[0], custom_moon[1], custom_moon[2], custom_moon[3], custom_moon[4], custom_moon[5]);
+          createMoon(custom_moon[0], custom_moon[1], custom_moon[2], custom_moon[3], custom_moon[4], custom_moon[5], custom_moon[6], custom_moon[7]);
           refreshMoons();
           moons_gui.open();
           moons[moons.length-1].userData.folder.open();
@@ -139,16 +139,16 @@ function addStarGui(properties, folder, name, value, isColour, min, max) {
             custom_planet[0] = val;
           })
           planet_folder.add(planet_params, 'radius', 0.1, 10).onChange(function(val) {
-            custom_planet[1] = val;
-          })
-          planet_folder.addColor(planet_params, 'colour').onChange(function(val) {
-            custom_planet[2].setHex(val);
-          })
-          planet_folder.add(planet_params, 'orbit', 15, 1000).onChange(function(val) {
             custom_planet[3] = val;
           })
+          planet_folder.addColor(planet_params, 'colour').onChange(function(val) {
+            custom_planet[4] = val;
+          })
+          planet_folder.add(planet_params, 'orbit', 15, 1000).onChange(function(val) {
+            custom_planet[5] = val;
+          })
           planet_folder.add(planet_params, 'speed', 1, 100).onChange(function(val) {
-            custom_planet[4] = val
+            custom_planet[6] = val
           })
           planet_folder.add(planet_params, 'add');
         }
@@ -164,19 +164,19 @@ function addStarGui(properties, folder, name, value, isColour, min, max) {
             custom_moon[0] = val;
           })
           moon_folder.add(moon_params, 'radius', 0.1, 2).onChange(function(val) {
-            custom_moon[1] = val;
-          })
-          moon_folder.addColor(moon_params, 'colour').onChange(function(val) {
-            custom_moon[2] = val;
-          })
-          moon_folder.add(moon_params, 'orbit', 5, 20).onChange(function(val) {
             custom_moon[3] = val;
           })
-          moon_folder.add(moon_params, 'speed', 1, 20).onChange(function(val) {
+          moon_folder.addColor(moon_params, 'colour').onChange(function(val) {
             custom_moon[4] = val;
           })
-          moon_folder.add(moon_params, 'orbiting', getPlanets()).onChange(function(val) {
+          moon_folder.add(moon_params, 'orbit', 5, 20).onChange(function(val) {
             custom_moon[5] = val;
+          })
+          moon_folder.add(moon_params, 'speed', 1, 20).onChange(function(val) {
+            custom_moon[6] = val;
+          })
+          moon_folder.add(moon_params, 'orbiting', getPlanets()).onChange(function(val) {
+            custom_moon[7] = val;
           });
           moon_folder.add(moon_params, 'add');
         }
