@@ -87,12 +87,12 @@
 				var skybox_geometry = new THREE.BoxGeometry(10000, 10000, 10000);
 				var skybox_image =
 				[
-					new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load( "img/skybox_front.png"), side: THREE.DoubleSide}),
-					new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load( "img/skybox_back.png"), side: THREE.DoubleSide}),
-					new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load( "img/skybox_up.png"), side: THREE.DoubleSide}),
-					new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load( "img/skybox_down.png"), side: THREE.DoubleSide}),
-					new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load( "img/skybox_right.png"), side: THREE.DoubleSide}),
-					new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load( "img/skybox_left.png"), side: THREE.DoubleSide})
+					new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load( "img/skybox_front.jpg"), side: THREE.DoubleSide}),
+					new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load( "img/skybox_back.jpg"), side: THREE.DoubleSide}),
+					new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load( "img/skybox_up.jpg"), side: THREE.DoubleSide}),
+					new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load( "img/skybox_down.jpg"), side: THREE.DoubleSide}),
+					new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load( "img/skybox_right.jpg"), side: THREE.DoubleSide}),
+					new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load( "img/skybox_left.jpg"), side: THREE.DoubleSide})
 				];
 
 				var skybox_material = new THREE.MeshFaceMaterial(skybox_image);
