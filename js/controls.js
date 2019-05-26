@@ -49,11 +49,6 @@ function activateControls() {
     }, false );
   }
 
-  function autoCameraMovement(){
-    camera.position.set(35, 0, 50);
-    scene.add(camera);
-  }
-
   var onKeyDown = function ( event ) {
 
     switch ( event.keyCode ) {
@@ -86,12 +81,10 @@ function activateControls() {
         moveDown = true;
         break;
 
-      case 81:
-        // PointerLockControls.enabled = false;
-        // autoCameraMovement();
-        camera.position.set(35, 0, 50);
-        scene.add(camera);
-        break;
+      // case 81:
+      //   camera.position.set(35, 0, 50);
+      //   scene.add(camera);
+      //   break;
 
     }
 
@@ -129,11 +122,9 @@ function activateControls() {
         moveDown = false;
         break;
 
-      case 81:
-        // PointerLockControls.enabled = true;
-        init();
-
-        break;
+      // case 81:
+      //   init();
+      //   break;
 
     }
   };

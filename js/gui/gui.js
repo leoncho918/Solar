@@ -20,6 +20,10 @@ function buildGui() {
         star.userData.remove_button = addButton(this, star_folder, 'hide');
         hideInfo();
         showInfo(star.userData.name, star.userData.category, star.userData.desc, star.userData.colour);
+
+
+        camera.position.set(star.position.x, star.position.y, star.position.z);
+        scene.add(camera);
       },
       hide: function() {
         hideInfo();
@@ -74,6 +78,9 @@ function buildPlanetsGui() {
         planet.userData.remove_button = addButton(this, planet_folder, 'hide');
         hideInfo();
         showInfo(planet.userData.name, planet.userData.category, planet.userData.desc, planet.userData.colour);
+
+        camera.position.set(planet.position.x, planet.position.y, planet.position.z);
+        scene.add(camera);
       },
       hide: function() {
         hideInfo();
