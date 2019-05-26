@@ -1,8 +1,8 @@
-var createPlanet = function(name, description, category, radius, colour, orbit, speed) {
+var createPlanet = function(name, description, category, radius, colour, texture, orbit, speed) {
 
   var geometry = new THREE.SphereGeometry(radius, 32, 32);
   var material = new THREE.MeshLambertMaterial({
-    color: new THREE.Color(colour)
+    map: new THREE.TextureLoader().load('../img/textures/'+texture+'')
   });
 
   var planet = new THREE.Mesh(geometry, material);
@@ -28,6 +28,10 @@ var createPlanet = function(name, description, category, radius, colour, orbit, 
     var ring_mesh = new THREE.Mesh(ring_geometry, ring_material);
     ring_mesh.rotation.x = 1;
     ring_mesh.rotation.y = 0.75;
+
+    ring_mesh.castShadow = true;
+    ring_mesh.receiveShadow = true;
+
     planet.add(ring_mesh);
   }
 

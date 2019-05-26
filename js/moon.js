@@ -1,8 +1,8 @@
-var createMoon = function(name, description, category, radius, colour, orbit, speed, centreMass) {
+var createMoon = function(name, description, category, radius, colour, texture, orbit, speed, centreMass) {
 
   var geometry = new THREE.SphereGeometry(radius, 32, 32);
   var material = new THREE.MeshLambertMaterial({
-    color: new THREE.Color(colour)
+    map: new THREE.TextureLoader().load('../img/textures/'+texture+'')
   });
 
   var moon = new THREE.Mesh(geometry, material);
@@ -15,7 +15,7 @@ var createMoon = function(name, description, category, radius, colour, orbit, sp
 
   moon.castShadow = true;
   moon.receiveShadow = true;
-  
+
   planets.forEach(function(planet) {
     if (planet.userData.name == centreMass) {
         moon.userData.centreMass = planet;
