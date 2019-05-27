@@ -1,8 +1,9 @@
 var createPlanet = function(name, description, category, radius, colour, texture, orbit, speed, rotation) {
 
   var geometry = new THREE.SphereGeometry(radius, 32, 32);
-  var material = new THREE.MeshLambertMaterial({
-    map: new THREE.TextureLoader().load('../img/textures/'+texture+'')
+  var material = new THREE.MeshPhongMaterial({
+    map: new THREE.TextureLoader().load('../img/textures/'+texture+''),
+    shininess: 0
   });
 
   var planet = new THREE.Mesh(geometry, material);

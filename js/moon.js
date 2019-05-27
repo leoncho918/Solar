@@ -1,8 +1,9 @@
 var createMoon = function(name, description, category, radius, colour, texture, orbit, speed, centreMass) {
 
   var geometry = new THREE.SphereGeometry(radius, 32, 32);
-  var material = new THREE.MeshLambertMaterial({
-    map: new THREE.TextureLoader().load('../img/textures/'+texture+'')
+  var material = new THREE.MeshPhongMaterial({
+    map: new THREE.TextureLoader().load('../img/textures/'+texture+''),
+    shininess: 0
   });
 
   var moon = new THREE.Mesh(geometry, material);
