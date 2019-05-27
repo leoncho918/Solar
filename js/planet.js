@@ -14,7 +14,8 @@ var createPlanet = function(name, description, category, radius, colour, texture
   planet.userData.category = category;
   planet.userData.colour = colour;
   planet.userData.rotation = rotation;
-
+  planet.userData.texture = texture;
+  
   planet.castShadow = true;
   planet.receiveShadow = true;
 
