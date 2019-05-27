@@ -8,7 +8,7 @@ function buildGui() {
   {
     var star_properties = {
       size: star.scale.x,
-      colour: star.material.color.getHex(),
+      colour: star.userData.colour,
       luminosity: star.userData.light.intensity,
       view: function() {
         removeHide();
@@ -34,9 +34,9 @@ function buildGui() {
     star.userData.folder = star_folder;
     star.userData.properties = star_properties;
 
-    addStarGui(star_properties, star_folder, 'colour', star, true, 0, 0.1);
-    addStarGui(star_properties, star_folder, 'size', star, false, 0.1, 10);
-    addStarGui(star_properties, star_folder, 'luminosity', star, false, 0, 4);
+    addStarGui(star_properties, star_folder, 'colour', star, 0, 0.1);
+    addStarGui(star_properties, star_folder, 'size', star, 0.1, 10);
+    addStarGui(star_properties, star_folder, 'luminosity', star, 0, 4);
     star.userData.add_button = addButton(star_properties, star_folder, 'view');
 
   });

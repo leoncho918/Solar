@@ -3,13 +3,14 @@ var planet_texture_names = ["Mercury Texture", "Venus Texture", "Earth Texture",
 var moon_textures = ["moon_texture.jpg"];
 var moon_texture_names = ["Moon Texture"];
 
-function addStarGui(properties, folder, name, value, isColour, min, max) {
+function addStarGui(properties, folder, name, value, min, max) {
   switch(name) {
     case "colour":
       folder.addColor(properties, name, min, max).onChange(function(val) {
-        value.material.color.setHex(val);
-        value.material.emissive.setHex(val);
-        value.children[0].color.setHex(val);
+        var colour = new THREE.Color(val);
+        value.material.color = colour;
+        value.userData.colour = convertRGB(value.material.color);
+        value.children[0].color = colour;
       });
       break;
     case "size":
@@ -88,7 +89,7 @@ function addStarGui(properties, folder, name, value, isColour, min, max) {
       item: ""
     }
   
-    var custom_planet = ["Pluto", "", "", 2, "rgb(0,119,190)", "earth_texture.jpg", 800, 2];
+    var custom_planet = ["Pluto", "", "", 2, "rgb(0,119,190)", "earth_texture.jpg", 800, 2, 0.01];
   
     var planet_params = {
       name: "Pluto",
@@ -99,7 +100,7 @@ function addStarGui(properties, folder, name, value, isColour, min, max) {
       speed: 2,
       add: function() {
         if (nameFree(custom_planet[0], true)) {
-          createPlanet(custom_planet[0], custom_planet[1], custom_planet[2], custom_planet[3], custom_planet[4], custom_planet[5], custom_planet[6], custom_planet[7]);
+          createPlanet(custom_planet[0], custom_planet[1], custom_planet[2], custom_planet[3], custom_planet[4], custom_planet[5], custom_planet[6], custom_planet[7], custom_planet[8]);
           refreshPlanets();
           planets_gui.open();
           planets[planets.length-1].userData.folder.open();
