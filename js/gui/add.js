@@ -1,5 +1,13 @@
-var planet_textures = ["mercury_texture.jpg", "venus_texture.jpg", "earth_texture.jpg", "mars_texture.jpg", "jupiter_texture.jpg", "saturn_texture.jpg", "uranus_texture.jpg", "neptune_texture.jpg"];
-var planet_texture_names = ["Mercury Texture", "Venus Texture", "Earth Texture", "Mars Texture", "Jupiter Texture", "Saturn Texture", "Uranus Texture", "Neptune Texture"];
+var planet_textures = ["mercury_texture.jpg", "venus_texture.jpg",
+                       "earth_texture.jpg", "mars_texture.jpg", "jupiter_texture.jpg",
+                       "saturn_texture.jpg", "uranus_texture.jpg", "neptune_texture.jpg",
+                       "ceres_texture.jpg", "eris_texture.jpg", "haumea_texture.jpg",
+                       "makemake_texture.jpg"];
+var planet_texture_names = ["Mercury Texture", "Venus Texture",
+                            "Earth Texture", "Mars Texture", "Jupiter Texture",
+                            "Saturn Texture", "Uranus Texture", "Neptune Texture",
+                            "Ceres Texture", "Eris Texture", "Haumea Texture",
+                            "Makemake Texture"];
 var moon_textures = ["moon_texture.jpg"];
 var moon_texture_names = ["Moon Texture"];
 
@@ -25,7 +33,7 @@ function addStarGui(properties, folder, name, value, min, max) {
       break;
   }
 }
-  
+
   function addItemGui(properties, folder, name, value, isMoon, min, max) {
     switch(name) {
       case "colour":
@@ -88,9 +96,9 @@ function addStarGui(properties, folder, name, value, min, max) {
     var add_params = {
       item: ""
     }
-  
+
     var custom_planet = ["Pluto", "", "", 2, "rgb(0,119,190)", "earth_texture.jpg", 800, 2, 0.01];
-  
+
     var planet_params = {
       name: "Pluto",
       radius: 2,
@@ -109,9 +117,9 @@ function addStarGui(properties, folder, name, value, min, max) {
         }
       }
     }
-  
+
     var custom_moon = ["Titan", "", "", 0.25, "rgb(165,129,0)", "moon_texture.jpg", 10, 8, "Jupiter"];
-  
+
     var moon_params = {
       name: "Titan",
       radius: 0.25,
@@ -131,11 +139,11 @@ function addStarGui(properties, folder, name, value, min, max) {
         }
       }
     }
-  
+
     var planet_folder, moon_folder;
     var planet = false;
     var moon = false;
-  
+
     add_gui = gui.addFolder("Add");
     add_gui.add(add_params, 'item', [ 'Planet', 'Moon' ]).onChange(function(val) {
       if (val == "Planet") {
