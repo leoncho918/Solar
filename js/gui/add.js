@@ -82,7 +82,7 @@ function addStarGui(properties, folder, name, value, isColour, min, max) {
       item: ""
     }
   
-    var custom_planet = ["Pluto", "", "", 2, "rgb(0,119,190)", 800, 2];
+    var custom_planet = ["Pluto", "", "", 2, "rgb(0,119,190)", 800, 2, 0.01];
   
     var planet_params = {
       name: "Pluto",
@@ -92,7 +92,7 @@ function addStarGui(properties, folder, name, value, isColour, min, max) {
       speed: 2,
       add: function() {
         if (nameFree(custom_planet[0], true)) {
-          createPlanet(custom_planet[0], custom_planet[1], custom_planet[2], custom_planet[3], custom_planet[4], custom_planet[5], custom_planet[6]);
+          createPlanet(custom_planet[0], custom_planet[1], custom_planet[2], custom_planet[3], custom_planet[4], custom_planet[5], custom_planet[6], custom_planet[7]);
           refreshPlanets();
           planets_gui.open();
           planets[planets.length-1].userData.folder.open();

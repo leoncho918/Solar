@@ -171,6 +171,7 @@
 					var speed = planet.userData.speed;
 					planet.position.x = Math.cos(time * speed) * orbit;
 					planet.position.z = Math.sin(time * speed) * orbit;
+					planet.rotation.y += planet.userData.rotation;
 				});
 
 				moons.forEach(function(moon) {
