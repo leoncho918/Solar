@@ -24,6 +24,9 @@ function buildGui() {
 
         camera.position.set(star.position.x, star.position.y, star.position.z);
         scene.add(camera);
+
+
+
       },
       hide: function() {
         hideInfo();
@@ -31,6 +34,12 @@ function buildGui() {
         star_folder.remove(star.userData.remove_button);
         star.userData.remove_button = undefined;
         star.userData.add_button = addButton(this, star_folder, 'view');
+
+        // camera.position.set(0, 0, 0);
+        // scene.add(camera);
+
+        activateControls();
+
       }
     }
 
@@ -79,8 +88,12 @@ function buildPlanetsGui() {
         hideInfo();
         showInfo(planet.userData.name, planet.userData.category, planet.userData.desc, planet.userData.colour);
 
-        camera.position.set(planet.position.x, planet.position.y, planet.position.z);
-        scene.add(camera);
+        scene.remove( controls.getObject());
+        planet.add( controls.getObject());
+        controlsEnabled = false;
+        controls.enabled = false;
+        // camera.position.set(planet.position.x, planet.position.y, planet.position.z);
+        // scene.add(camera);
       },
       hide: function() {
         hideInfo();
@@ -92,6 +105,20 @@ function buildPlanetsGui() {
         planet_folder.remove(planet.userData.remove_button);
         planet.userData.remove_button = undefined;
         planet.userData.add_button = addButton(this, planet_folder, 'view');
+
+        // // camera.position.set(0, 0, 0);
+        // // scene.add(camera);
+        // //
+        // // controls.enable = true;
+        // // scene.add(controls.getObject());
+        //
+        // // init();
+        // camera = new THREE.PerspectiveCamera(45,ratio,1,100000);
+        //
+        // update();
+        // activateControls();
+
+
       }
     }
 
@@ -190,6 +217,12 @@ function removeHide() {
     if (planet.userData.remove_button!=undefined) {
       planet.userData.folder.remove(planet.userData.remove_button);
       planet.userData.remove_button = undefined;
+
+      planet.remove(controls.getObject());
+      controlsEnabled = true;
+      controls.enabled = true;
+      scene.add(controls.getObject());
+      // activateControls();
     }
     if (planet.userData.add_button==undefined)
       planet.userData.add_button = addButton(planet.userData.properties, planet.userData.folder, 'view');
