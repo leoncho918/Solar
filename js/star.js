@@ -1,9 +1,8 @@
 var createStar = function(name, description, category, radius, colour, texture, luminosity) {
 
   var geometry = new THREE.SphereGeometry(radius, 32, 32);
-  var material = new THREE.MeshLambertMaterial({
-    map: new THREE.TextureLoader().load('../img/textures/'+texture+''),
-    emissive: new THREE.Color(colour)
+  var material = new THREE.MeshBasicMaterial({
+    map: new THREE.TextureLoader().load('../img/textures/'+texture+'')
   });
 
   var star = new THREE.Mesh(geometry, material);

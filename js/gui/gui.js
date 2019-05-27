@@ -39,7 +39,6 @@ function buildGui() {
     addStarGui(star_properties, star_folder, 'luminosity', star, false, 0, 4);
     star.userData.add_button = addButton(star_properties, star_folder, 'view');
 
-
   });
 
   planets_gui = gui.addFolder("Planets");
@@ -58,7 +57,7 @@ function buildPlanetsGui() {
   {
     planet_properties = {
       size: planet.scale.x,
-      colour: planet.material.color.getHex(),
+      colour: planet.userData.colour,
       orbit: planet.userData.orbit,
       speed: planet.userData.speed,
       view: function() {
@@ -105,7 +104,7 @@ function buildMoonsGui() {
   {
     moon_properties = {
       size: moon.scale.x,
-      colour: moon.material.color.getHex(),
+      colour: moon.userData.colour,
       orbit: moon.userData.orbit,
       speed: moon.userData.speed,
       view: function() {
