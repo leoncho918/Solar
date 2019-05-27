@@ -59,7 +59,6 @@ function buildPlanetsGui() {
     planet_properties = {
       size: planet.scale.x,
       colour: planet.material.color.getHex(),
-      texture: planet.userData.texture,
       orbit: planet.userData.orbit,
       speed: planet.userData.speed,
       view: function() {
@@ -93,7 +92,6 @@ function buildPlanetsGui() {
     planet.userData.folder = planet_folder;
     planet.userData.properties = planet_properties;
 
-    addItemGui(planet_properties, planet_folder, 'texture', planet, false, 0, 5);
     addItemGui(planet_properties, planet_folder, 'colour', planet, false, 0, 0.1);
     addItemGui(planet_properties, planet_folder, 'size', planet, false, 0.1, 10);
     addItemGui(planet_properties, planet_folder, 'orbit', planet, false, 0, 1000);
