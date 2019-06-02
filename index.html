@@ -44,7 +44,7 @@
 				<p id="desc"></p>
 			</div>
 		</div>
-		
+
 		<script>
 
 			var camera, scene, renderer, controls, controlsEnabled;
@@ -88,12 +88,12 @@
 				var skybox_geometry = new THREE.BoxGeometry(10000, 10000, 10000);
 				var skybox_image =
 				[
-					new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load( "img/skybox_front.jpg"), side: THREE.DoubleSide}),
-					new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load( "img/skybox_back.jpg"), side: THREE.DoubleSide}),
-					new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load( "img/skybox_up.jpg"), side: THREE.DoubleSide}),
-					new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load( "img/skybox_down.jpg"), side: THREE.DoubleSide}),
-					new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load( "img/skybox_right.jpg"), side: THREE.DoubleSide}),
-					new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load( "img/skybox_left.jpg"), side: THREE.DoubleSide})
+					new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load( "img/skybox/skybox_front.png"), side: THREE.DoubleSide}),
+					new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load( "img/skybox/skybox_back.png"), side: THREE.DoubleSide}),
+					new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load( "img/skybox/skybox_up.png"), side: THREE.DoubleSide}),
+					new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load( "img/skybox/skybox_down.png"), side: THREE.DoubleSide}),
+					new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load( "img/skybox/skybox_right.png"), side: THREE.DoubleSide}),
+					new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load( "img/skybox/skybox_left.png"), side: THREE.DoubleSide})
 				];
 
 				var skybox_material = new THREE.MeshFaceMaterial(skybox_image);
@@ -172,7 +172,7 @@
 					planet.position.x = Math.cos(time * speed) * orbit;
 					planet.position.z = Math.sin(time * speed) * orbit;
 
-					
+
 					planet.rotation.y += planet.userData.rotation;
 				});
 
