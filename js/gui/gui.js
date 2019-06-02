@@ -20,6 +20,7 @@ function buildGui() {
         star.userData.remove_button = addButton(this, star_folder, 'hide');
         hideInfo();
         showInfo(star.userData.name, star.userData.category, star.userData.desc, star.userData.colour);
+        followObject(star);
       },
       hide: function() {
         hideInfo();
@@ -27,6 +28,7 @@ function buildGui() {
         star_folder.remove(star.userData.remove_button);
         star.userData.remove_button = undefined;
         star.userData.add_button = addButton(this, star_folder, 'view');
+        stopFollowing(star);
       }
     }
 
@@ -73,6 +75,7 @@ function buildPlanetsGui() {
         planet.userData.remove_button = addButton(this, planet_folder, 'hide');
         hideInfo();
         showInfo(planet.userData.name, planet.userData.category, planet.userData.desc, planet.userData.colour);
+        followObject(planet);
       },
       hide: function() {
         hideInfo();
@@ -84,6 +87,7 @@ function buildPlanetsGui() {
         planet_folder.remove(planet.userData.remove_button);
         planet.userData.remove_button = undefined;
         planet.userData.add_button = addButton(this, planet_folder, 'view');
+        stopFollowing(planet);
       }
     }
 
@@ -120,6 +124,7 @@ function buildMoonsGui() {
         moon.userData.remove_button = addButton(this, moon_folder, 'hide');
         hideInfo();
         showInfo(moon.userData.name, moon.userData.category, moon.userData.desc, moon.userData.colour);
+        followObject(moon);
       },
       hide: function() {
         hideInfo();
@@ -131,6 +136,7 @@ function buildMoonsGui() {
         moon_folder.remove(moon.userData.remove_button);
         moon.userData.remove_button = undefined;
         moon.userData.add_button = addButton(this, moon_folder, 'view');
+        stopFollowing(moon);
       }
     }
 
@@ -182,6 +188,7 @@ function removeHide() {
     if (planet.userData.remove_button!=undefined) {
       planet.userData.folder.remove(planet.userData.remove_button);
       planet.userData.remove_button = undefined;
+      stopFollowing(planet);
     }
     if (planet.userData.add_button==undefined)
       planet.userData.add_button = addButton(planet.userData.properties, planet.userData.folder, 'view');
@@ -192,6 +199,7 @@ function removeHide() {
     if (moon.userData.remove_button!=undefined) {
       moon.userData.folder.remove(moon.userData.remove_button);
       moon.userData.remove_button = undefined;
+      stopFollowing(moon);
     }
     if (moon.userData.add_button==undefined)
       moon.userData.add_button = addButton(moon.userData.properties, moon.userData.folder, 'view');
@@ -205,6 +213,7 @@ function removeHide() {
     if (star.userData.remove_button!=undefined) {
       star.userData.folder.remove(star.userData.remove_button);
       star.userData.remove_button = undefined;
+      stopFollowing(star);
     }
     if (star.userData.add_button==undefined)
       star.userData.add_button = addButton(star.userData.properties, star.userData.folder, 'view');
@@ -221,4 +230,18 @@ function drawPath(orbit) {
   return new THREE.Line(spacedPoints, new THREE.LineBasicMaterial({
     color: "white"
   }));
+}
+
+function followObject(object) {
+  scene.remove(controls.getObject());
+  object.add(controls.getObject());
+  controls.getObject().translateZ(object.userData.zoom);
+  controls.getObject().translateY(-10);
+}
+
+function stopFollowing(object) {
+  object.remove(controls.getObject());
+  scene.add(controls.getObject());
+  controls.getObject().translateZ(-object.userData.zoom);
+  controls.getObject().translateY(10);
 }

@@ -1,4 +1,4 @@
-var createStar = function(name, description, category, radius, colour, texture, luminosity) {
+var createStar = function(name, description, category, radius, colour, texture, luminosity, zoom) {
 
   var geometry = new THREE.SphereGeometry(radius, 32, 32);
   var material = new THREE.MeshBasicMaterial({
@@ -10,6 +10,7 @@ var createStar = function(name, description, category, radius, colour, texture, 
   star.userData.desc = description;
   star.userData.category = category;
   star.userData.colour = colour;
+  star.userData.zoom = zoom;
 
   var light = new THREE.PointLight(new THREE.Color(colour), luminosity);
   light.castShadow = true;;

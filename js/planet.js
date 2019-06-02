@@ -1,4 +1,4 @@
-var createPlanet = function(name, description, category, radius, colour, texture, orbit, speed, rotation) {
+var createPlanet = function(name, description, category, radius, colour, texture, orbit, speed, rotation, zoom) {
 
   var geometry = new THREE.SphereGeometry(radius, 32, 32);
   var material = new THREE.MeshPhongMaterial({
@@ -15,6 +15,7 @@ var createPlanet = function(name, description, category, radius, colour, texture
   planet.userData.category = category;
   planet.userData.colour = colour;
   planet.userData.rotation = rotation;
+  planet.userData.zoom = zoom;
 
   planet.castShadow = true;
   planet.receiveShadow = true;

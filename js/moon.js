@@ -1,4 +1,4 @@
-var createMoon = function(name, description, category, radius, colour, texture, orbit, speed, centreMass) {
+var createMoon = function(name, description, category, radius, colour, texture, orbit, speed, centreMass, zoom) {
 
   var geometry = new THREE.SphereGeometry(radius, 32, 32);
   var material = new THREE.MeshPhongMaterial({
@@ -13,6 +13,7 @@ var createMoon = function(name, description, category, radius, colour, texture, 
   moon.userData.desc = description;
   moon.userData.category = category;
   moon.userData.colour = colour;
+  moon.userData.zoom = zoom;
 
   moon.castShadow = true;
   moon.receiveShadow = true;
