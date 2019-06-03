@@ -1,15 +1,14 @@
-var planet_textures = ["mercury_texture.jpg", "venus_texture.jpg",
+var textures = ["mercury_texture.jpg", "venus_texture.jpg",
                        "earth_texture.jpg", "mars_texture.jpg", "jupiter_texture.jpg",
                        "saturn_texture.jpg", "uranus_texture.jpg", "neptune_texture.jpg",
                        "ceres_texture.jpg", "eris_texture.jpg", "haumea_texture.jpg",
-                       "makemake_texture.jpg"];
-var planet_texture_names = ["Mercury Texture", "Venus Texture",
+                       "makemake_texture.jpg", "pluto_texture.jpg", "moon_texture.jpg"];
+
+var texture_names = ["Mercury Texture", "Venus Texture",
                             "Earth Texture", "Mars Texture", "Jupiter Texture",
                             "Saturn Texture", "Uranus Texture", "Neptune Texture",
                             "Ceres Texture", "Eris Texture", "Haumea Texture",
-                            "Makemake Texture"];
-var moon_textures = ["moon_texture.jpg"];
-var moon_texture_names = ["Moon Texture"];
+                            "Makemake Texture", "Pluto Texture", "Moon Texture"];
 
 function addStarGui(properties, folder, name, value, min, max) {
   switch(name) {
@@ -97,13 +96,13 @@ function addStarGui(properties, folder, name, value, min, max) {
       item: ""
     }
 
-    var custom_planet = ["Pluto", "", "", 2, "rgb(0,119,190)", "earth_texture.jpg", 800, 2, 0.01];
+    var custom_planet = ["Pluto", "", "", 2, "rgb(0,119,190)", "pluto_texture.jpg", 800, 2, 0.01];
 
     var planet_params = {
       name: "Pluto",
       radius: 2,
       colour: "rgb(0,119,190)",
-      texture: "Earth Texture",
+      texture: "Pluto Texture",
       orbit: 800,
       speed: 2,
       add: function() {
@@ -159,8 +158,8 @@ function addStarGui(properties, folder, name, value, min, max) {
           planet_folder.add(planet_params, 'radius', 0.1, 10).onChange(function(val) {
             custom_planet[3] = val;
           })
-          planet_folder.add(planet_params, 'texture', planet_texture_names).onChange(function(val) {
-            custom_planet[5] = planet_textures[planet_texture_names.indexOf(val)];
+          planet_folder.add(planet_params, 'texture', texture_names).onChange(function(val) {
+            custom_planet[5] = textures[texture_names.indexOf(val)];
           })
           planet_folder.add(planet_params, 'orbit', 15, 1000).onChange(function(val) {
             custom_planet[6] = val;
@@ -184,8 +183,8 @@ function addStarGui(properties, folder, name, value, min, max) {
           moon_folder.add(moon_params, 'radius', 0.1, 2).onChange(function(val) {
             custom_moon[3] = val;
           })
-          planet_folder.add(moon_params, 'texture', moon_texture_names).onChange(function(val) {
-            custom_moon[5] = moon_textures[moon_texture_names.indexOf(val)];
+          moon_folder.add(moon_params, 'texture', texture_names).onChange(function(val) {
+            custom_moon[5] = textures[texture_names.indexOf(val)];
           })
           moon_folder.add(moon_params, 'orbit', 5, 20).onChange(function(val) {
             custom_moon[6] = val;
