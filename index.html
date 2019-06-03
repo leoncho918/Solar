@@ -24,8 +24,6 @@
 			<script src="js/gui/add.js"></script>
 			<script src="js/gui/remove.js"></script>
 			<script src="js/animation.js"></script>
-			<script src="js/OBJLoader.js"></script>
-			<script src="js/MTLLoader.js"></script>
 
 		<div id="blocker">
 			<img id = "border" src="img/border.png">
@@ -101,51 +99,6 @@
 				var skybox_material = new THREE.MeshFaceMaterial(skybox_image);
 				var skybox = new THREE.Mesh ( skybox_geometry, skybox_material);
 				scene.add(skybox);
-
-				var mtlLoader = new THREE.MTLLoader();
-				mtlLoader.setTexturePath( "models/deathstar_models/" );
-				mtlLoader.setPath( "models/deathstar_models/" );
-
-				mtlLoader.load("deathstar.obj.mtl", function(deathstar_material)
-				{
-					deathstar_material.preload();
-					var objLoader = new THREE.OBJLoader();
-					objLoader.setPath( "models/deathstar_models/" );
-					objLoader.setMaterials(deathstar_material);
-
-					objLoader.load("deathstar.obj", function(mesh)
-					{
-						 var centerBounding;
-						 var sizeBounding;
-						 mesh.traverse(function(child)
-						 {
-								 if (child instanceof THREE.Mesh)
-								 {
-										 var deathstar_geometry = new THREE.Geometry().fromBufferGeometry(child.geometry);
-										 deathstar_geometry.computeBoundingBox();
-										 child.material.color= new THREE.Color(0.7,0.7,0.7);
-										 centerBounding = deathstar_geometry.boundingBox.getCenter();
-										 sizeBounding = deathstar_geometry.boundingBox.getSize();
-								 }
-						 });
-						 scene.add(mesh);
-						 var sca = new THREE.Matrix4();
-						 var tra = new THREE.Matrix4();
-						 var rot = new THREE.Matrix4();
-						 var combined = new THREE.Matrix4();
-
-						 sca.makeScale(8/sizeBounding.length(),8/sizeBounding.length(),8/sizeBounding.length());
-						 //tra.makeTranslation (-CenterBB.x,-CenterBB.y,-CenterBB.z);
-						 rot.makeRotationX(Math.PI / 2);
-
-						 tra.makeTranslation (-centerBounding.x,-centerBounding.y*150,-centerBounding.z);
-						 combined.multiply(sca);
-						 combined.multiply(tra);
-						 combined.multiply(rot);
-
-						 mesh.applyMatrix(combined);
-				 });
-				});
 
 				generatePlanets();
 
