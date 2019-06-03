@@ -134,11 +134,11 @@
 						 var rot = new THREE.Matrix4();
 						 var combined = new THREE.Matrix4();
 
-						 sca.makeScale(1.5/sizeBounding.length(),1.5/sizeBounding.length(),1.5/sizeBounding.length());
+						 sca.makeScale(8/sizeBounding.length(),8/sizeBounding.length(),8/sizeBounding.length());
 						 //tra.makeTranslation (-CenterBB.x,-CenterBB.y,-CenterBB.z);
 						 rot.makeRotationX(Math.PI / 2);
 
-						 tra.makeTranslation (-centerBounding.x*300,-centerBounding.y,-centerBounding.z*300);
+						 tra.makeTranslation (-centerBounding.x,-centerBounding.y*100,-centerBounding.z);
 						 combined.multiply(sca);
 						 combined.multiply(tra);
 						 combined.multiply(rot);
