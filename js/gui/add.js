@@ -186,7 +186,7 @@ function addStarGui(properties, folder, name, value, min, max) {
           moon_folder.add(moon_params, 'radius', 0.1, 2).onChange(function(val) {
             custom_moon[3] = val;
           })
-          planet_folder.add(moon_params, 'texture', moon_texture_names).onChange(function(val) {
+          moon_folder.add(moon_params, 'texture', moon_texture_names).onChange(function(val) {
             custom_moon[5] = moon_textures[moon_texture_names.indexOf(val)];
           })
           moon_folder.add(moon_params, 'orbit', 5, 20).onChange(function(val) {
