@@ -4,7 +4,7 @@ var stars = [];
 var sun_mesh
 var light;
 
-function generatePlanets() {
+function generateObjects() {
   //Sun Description
   var sun_desc = "is the star at the centre of our solar system and is responsible for the Earth’s climate and weather.";
 
