@@ -1,14 +1,14 @@
+// Create arrays to store the stars, planets and moons
 var planets = [];
 var moons = [];
 var stars = [];
-var sun_mesh
-var light;
 
+// Function to populate scene with objects
 function generateObjects() {
   //Sun Description
   var sun_desc = "is the star at the centre of our solar system and is responsible for the Earth’s climate and weather.";
 
-  //Create Sun (Currently only supports placing one sun)
+  //Creating Sun (Currently only supports placing one sun)
   createStar("Sun", sun_desc, "Yellow Dwarf", 10, "rgb(255, 230, 100)","star_texture.jpg", 1);
 
   //Planet Descriptions
@@ -21,7 +21,7 @@ function generateObjects() {
   var uranus_desc = "is the seventh planet from the Sun. While being visible to the naked eye, it was not recognised as a planet due to its dimness and slow orbit.";
   var neptune_desc = "is the eighth planet from the Sun making it the most distant in the solar system.";
 
-  //Create Planets
+  //Creating Planets
   createPlanet("Mercury", mercury_desc, "Terrestrial Planet", 0.5, "rgb(128,128,128)", "mercury_texture.jpg", 20.81, 4, 0.01);
   createPlanet("Venus", venus_desc, "Terrestrial Planet", 2, "rgb(255,255,224)", "venus_texture.jpg", 38.83, 3.5, 0.01);
   createPlanet("Earth", earth_desc, "Terrestrial Planet", 2, "rgb(0,119,190)", "earth_texture.jpg", 53.72, 3, 0.01);
@@ -31,9 +31,9 @@ function generateObjects() {
   createPlanet("Uranus", uranus_desc, "Gas Giant", 3, "rgb(135,206,250)", "uranus_texture.jpg", 631.07, 1, 0.01);
   createPlanet("Neptune", neptune_desc, "Gas Giant", 4, "rgb(65,105,225)", "neptune_texture.jpg", 700, 0.5, 0.01);
 
-  //Moon Descriptions
+  //Moon Description
   var moon_desc = "is the Earth’s only natural satellite and was formed 4.6 billion years ago around some 30–50 million years after the formation of the solar system."
 
-  //Create Moons
-  createMoon("Moon", moon_desc, "Natural Satellite", 0.25, "rgb(220,220,220)", "moon_texture.jpg", 10, 14, "Earth");
+  //Creating Moons
+  createMoon("Moon", moon_desc, "Natural Satellite", 0.25, "rgb(220,220,220)", "moon_texture.jpg", 10, 20, "Earth");
 }
