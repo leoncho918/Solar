@@ -1,17 +1,21 @@
+// Array string texture file names
 var textures = ["mercury_texture.jpg", "venus_texture.jpg",
                        "earth_texture.jpg", "mars_texture.jpg", "jupiter_texture.jpg",
                        "saturn_texture.jpg", "uranus_texture.jpg", "neptune_texture.jpg",
                        "ceres_texture.jpg", "eris_texture.jpg", "haumea_texture.jpg",
                        "makemake_texture.jpg", "pluto_texture.jpg", "moon_texture.jpg"];
-
+// Array storing texture names
 var texture_names = ["Mercury Texture", "Venus Texture",
                             "Earth Texture", "Mars Texture", "Jupiter Texture",
                             "Saturn Texture", "Uranus Texture", "Neptune Texture",
                             "Ceres Texture", "Eris Texture", "Haumea Texture",
                             "Makemake Texture", "Pluto Texture", "Moon Texture"];
 
+// Function to build the gui for it star properties
 function addStarGui(properties, folder, name, value, min, max) {
+  // Switch statment to find out what gui item needs to be added and can be changed
   switch(name) {
+    // If name of property is colour then add gui for colour that changes the colour of the star's material and it's light.
     case "colour":
       folder.addColor(properties, name, min, max).onChange(function(val) {
         var colour = new THREE.Color(val);
@@ -20,11 +24,13 @@ function addStarGui(properties, folder, name, value, min, max) {
         value.children[0].color = colour;
       });
       break;
+    // If name of property is size then add gui to change the scale of the star
     case "size":
       folder.add(properties, name, min, max).onChange(function(val) {
         value.scale.set(val, val, val);
       });
       break;
+    // If name of property is luminosity then add gui to change the intensity of the light
     case "luminosity":
       folder.add(properties, name, min, max).onChange(function(val) {
         value.userData.light.intensity = val;
@@ -32,9 +38,11 @@ function addStarGui(properties, folder, name, value, min, max) {
       break;
   }
 }
-
+// Function to build the gui for planet and moon properties
   function addItemGui(properties, folder, name, value, isMoon, min, max) {
+    // Switch statment to find out what gui item needs to be added and can be changed
     switch(name) {
+      // If property is colour then add gui item to change the material colour of the object
       case "colour":
         folder.addColor(properties, name, min, max).onChange(function(val) {
           var colour = new THREE.Color(val);
