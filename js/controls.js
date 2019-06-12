@@ -12,7 +12,7 @@ function activateControls() {
     var docBody = document.body;
     // Store the state of the pointer lock
     var pointerLockStateChange = function ( event ) {
-      // If the pointer is locked to the document, then enable the controls, hide the welcome and info text and remove hide buttons in the folders
+      // If the pointer is locked, then enable the controls, hide the welcome and info text and remove hide buttons in the folders
       if ( document.pointerLockElement === docBody || document.mozPointerLockElement === docBody || document.webkitPointerLockElement === docBody ) {
         controlsEnabled = true;
         controls.enabled = true;
@@ -30,16 +30,17 @@ function activateControls() {
         showStartUp();
       }
     };
-    // Hook pointer lock state change events
+    // Add event listeners for when the pointer lock state changes
     document.addEventListener( 'pointerlockchange', pointerLockStateChange, false );
     document.addEventListener( 'mozpointerlockchange', pointerLockStateChange, false );
     document.addEventListener( 'webkitpointerlockchange', pointerLockStateChange, false );
+    // If the mouse clicks the blocker div element, then enable controls, hide startup and info text and remove hide from all folder
     blocker.addEventListener( 'click', function ( event ) {
       controlsEnabled = true;
       hideStartUp();
       hideInfo();
       removeHide();
-      // Ask the browser to lock the pointer
+      // Request the pointer to be locked
       docBody.requestPointerLock = docBody.requestPointerLock || docBody.mozRequestPointerLock || docBody.webkitRequestPointerLock;
       if ( /Firefox/i.test( navigator.userAgent ) ) {
         var fullscreenchange = function ( event ) {
@@ -59,10 +60,11 @@ function activateControls() {
     }, false );
   }
 
+  // Function variable called when a key is pressed
   var onKeyDown = function ( event ) {
-
+    // Switch statement to determine what key is being pressed
     switch ( event.keyCode ) {
-
+      
       case 38: // up
       case 87: // w
         moveForward = true;
@@ -83,11 +85,11 @@ function activateControls() {
         moveRight = true;
         break;
 
-      case 32:
+      case 32: // space
         moveUp = true;
         break;
 
-      case 16:
+      case 16: // shift
         moveDown = true;
         break;
 
@@ -95,8 +97,9 @@ function activateControls() {
 
   };
 
+  // Function variable called when key is released
   var onKeyUp = function ( event ) {
-
+    // Switch statement to determine what key is being released
     switch( event.keyCode ) {
 
       case 38: // up
@@ -119,17 +122,18 @@ function activateControls() {
         moveRight = false;
         break;
 
-      case 32:
+      case 32: // space
         moveUp = false;
         break;
 
-      case 16:
+      case 16: // shift
         moveDown = false;
         break;
 
     }
   };
 
+  // Add event listeners for when keys are pressed and released
   document.addEventListener( 'keydown', onKeyDown, false );
   document.addEventListener( 'keyup', onKeyUp, false );
 }
