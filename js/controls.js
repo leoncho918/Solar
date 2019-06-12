@@ -1,17 +1,27 @@
+// Function to activate the movement controls
 function activateControls() {
+  // Get the div element that is the blocker
   var blocker = document.getElementById('blocker');
+  // Get the element that contains game instructions
   var instructions = document.getElementById('instructions');
+  // Check if the browser being used supports locking the pointer
   var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
+  // If the browser supports pointer locking
   if ( havePointerLock ) {
+    // Get the document body
     var docBody = document.body;
+    // Store the state of the pointer lock
     var pointerLockStateChange = function ( event ) {
+      // If the pointer is locked to the document, then enable the controls, hide the welcome and info text and remove hide buttons in the folders
       if ( document.pointerLockElement === docBody || document.mozPointerLockElement === docBody || document.webkitPointerLockElement === docBody ) {
         controlsEnabled = true;
         controls.enabled = true;
         hideStartUp();
         hideInfo();
         removeHide();
-      } else {
+      }
+      // If the pointer is no longer locked, then disable the controls, make the blocker visible and show the startup message
+      else {
         controls.enabled = false;
         controlsEnabled = false;
         blocker.style.display = '-webkit-box';
