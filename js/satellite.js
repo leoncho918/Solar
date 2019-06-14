@@ -1,10 +1,10 @@
 //Creates a type of satellite with .obj models
 var createSatellite = function(object, orbit, speed, centreMass) {
 
+    //Sets textures with .mtl files
     var mtlLoader = new THREE.MTLLoader();
     mtlLoader.setTexturePath( "models/"+object+"/" );
     mtlLoader.setPath( "models/"+object+"/" );
-
     mtlLoader.load( object+".mtl", function(satellite_material)
     {
       satellite_material.preload();
@@ -30,10 +30,8 @@ var createSatellite = function(object, orbit, speed, centreMass) {
         scene.add(satellite);
 
         var sca = new THREE.Matrix4();
-        var tra = new THREE.Matrix4();
-        var rot = new THREE.Matrix4();
-        var combined = new THREE.Matrix4();
 
+        //Scales 3D models to the same size
         if (object == "satellite"){
           objScale = 0.06;
         } else if (object == "satellite_v2") {
@@ -41,7 +39,6 @@ var createSatellite = function(object, orbit, speed, centreMass) {
         } else if (object == "satellite_v3") {
           objScale = 0.06;
         }
-
         sca.makeScale(objScale/sizeBounding.length(),objScale/sizeBounding.length(),objScale/sizeBounding.length());
         satellite.applyMatrix(sca);
 
@@ -51,6 +48,7 @@ var createSatellite = function(object, orbit, speed, centreMass) {
         satellite.castShadow = true;
         satellite.receiveShadow = true;
 
+        //Places a satellite on planet
         planets.forEach(function(planet) {
           if (planet.userData.name == centreMass) {
             satellite.userData.centreMass = planet;

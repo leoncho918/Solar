@@ -171,8 +171,9 @@ function addStarGui(properties, folder, name, value, min, max) {
       }
     }
 
-    var objType;
 
+    var objType;
+    //Adds a satellite model from the GUI options
     var satellite_params = {
       type: "Satellite",
       add: function() {

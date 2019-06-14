@@ -100,6 +100,7 @@
 
 				//Creates the skybox
 				var skybox_geometry = new THREE.BoxGeometry(10000, 10000, 10000);
+				//Maps 6 images to the cubemap
 				var skybox_image =
 				[
 					new THREE.MeshBasicMaterial( {map: new THREE.TextureLoader().load( "img/skybox/skybox_front.png"), side: THREE.DoubleSide}),
@@ -119,6 +120,7 @@
 				mtlLoader.setTexturePath( "models/deathstar_models/" );
 				mtlLoader.setPath( "models/deathstar_models/" );
 
+				//Loads .mtl textures onto Death Star geometry
 				mtlLoader.load("deathstar.obj.mtl", function(deathstar_material)
 				{
 					deathstar_material.preload();
@@ -143,6 +145,7 @@
 						 });
 						 scene.add(mesh);
 
+						 //Scales the Death Star and rotates it to the correct orientation
 						 var sca = new THREE.Matrix4();
 						 var tra = new THREE.Matrix4();
 						 var rot = new THREE.Matrix4();
