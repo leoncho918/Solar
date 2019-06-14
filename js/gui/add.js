@@ -10,9 +10,9 @@ var texture_names = ["Mercury Texture", "Venus Texture",
                             "Saturn Texture", "Uranus Texture", "Neptune Texture",
                             "Ceres Texture", "Eris Texture", "Haumea Texture",
                             "Makemake Texture", "Pluto Texture", "Moon Texture"];
-
+// Array to store satellite files names
 var objects = ["satellite", "satellite_v2", "satellite_v3"];
-
+// Array to store satellite names
 var object_names = ["Satellite V1", "Satellite V2", "Satellite V3"];
 
 // Function to build the gui for it star properties

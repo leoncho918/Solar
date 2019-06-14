@@ -1,4 +1,4 @@
-// Create arrays to store the stars, planets and moons
+// Create arrays to store the stars, planets, moons and satellites
 var planets = [];
 var moons = [];
 var stars = [];
