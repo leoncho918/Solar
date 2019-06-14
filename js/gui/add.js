@@ -166,8 +166,11 @@ function addStarGui(properties, folder, name, value, min, max) {
       if (val == "Planet") {
         if (moon)
           add_gui.removeFolder(moon_folder);
+        if (satellite)
+          add_gui.removeFolder(satellite_folder);
         planet = true;
         moon = false;
+        satellite = false;
         if (planet) {
           planet_folder = add_gui.addFolder('Add Planet');
           planet_folder.add(planet_params, 'name').onChange(function(val) {
@@ -191,8 +194,11 @@ function addStarGui(properties, folder, name, value, min, max) {
       if (val == "Moon") {
         if (planet)
           add_gui.removeFolder(planet_folder);
+        if (satellite)
+          add_gui.removeFolder(satellite_folder);
         planet = false;
         moon = true;
+        satellite = false;
         if (moon) {
           moon_folder = add_gui.addFolder('Add Moon');
           moon_folder.add(moon_params, 'name').onChange(function(val) {
