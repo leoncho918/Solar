@@ -148,12 +148,7 @@ function addStarGui(properties, folder, name, value, min, max) {
     var satellite_params = {
       type: "Satellite",
       add: function() {
-          if (objType == "satellite_v3") {
-            objSpeed = 6;
-          } else {
-            objSpeed = 8;
-          }
-          createSatellite(objType, 3, objSpeed, "Earth");
+          createSatellite(objType, 3, 8, "Earth");
       }
     }
 
