@@ -26,7 +26,7 @@ function generatePlanets() {
   createPlanet("Mercury", mercury_desc, "Terrestrial Planet", 0.5, "rgb(128,128,128)", "mercury_texture.jpg", 20.81, 4, 0.01);
   createPlanet("Venus", venus_desc, "Terrestrial Planet", 2, "rgb(255,255,224)", "venus_texture.jpg", 38.83, 3.5, 0.01);
   createPlanet("Earth", earth_desc, "Terrestrial Planet", 2, "rgb(0,119,190)", "earth_texture.jpg", 53.72, 3, 0.01);
-  createPlanet("Mars", mars_desc, "Terrestrial Planet", 1, "rgb(255,99,71)", "mars_texture.jpg", 81.84, 2.5), 0.01;
+  createPlanet("Mars", mars_desc, "Terrestrial Planet", 1, "rgb(255,99,71)", "mars_texture.jpg", 81.84, 2.5, 0.01);
   createPlanet("Jupiter", jupiter_desc, "Gas Giant", 5, "rgb(244,164,96)", "jupiter_texture.jpg", 279.52, 2, 0.01);
   createPlanet("Saturn", saturn_desc, "Gas Giant", 4, "rgb(255,222,173)", "saturn_texture.jpg", 512.6, 1.5, 0.01);
   createPlanet("Uranus", uranus_desc, "Gas Giant", 3, "rgb(135,206,250)", "uranus_texture.jpg", 631.07, 1, 0.01);
