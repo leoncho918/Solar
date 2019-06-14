@@ -1,9 +1,6 @@
+//Creates a type of satellite with .obj models
 var createSatellite = function(object, orbit, speed, centreMass) {
 
-  // var geometry = new THREE.SphereGeometry(0.1, 32, 32);
-  // var material = new THREE.MeshPhongMaterial();
-  //
-  // var satellite = new THREE.Mesh(geometry, material);
     var mtlLoader = new THREE.MTLLoader();
     mtlLoader.setTexturePath( "models/"+object+"/" );
     mtlLoader.setPath( "models/"+object+"/" );
@@ -37,21 +34,16 @@ var createSatellite = function(object, orbit, speed, centreMass) {
         var rot = new THREE.Matrix4();
         var combined = new THREE.Matrix4();
 
-
         if (object == "satellite"){
           objScale = 0.06;
         } else if (object == "satellite_v2") {
-          objScale = 5;
+          objScale = 0.5;
+        } else if (object == "satellite_v3") {
+          objScale = 0.06;
         }
 
         sca.makeScale(objScale/sizeBounding.length(),objScale/sizeBounding.length(),objScale/sizeBounding.length());
-        //tra.makeTranslation (-CenterBB.x,-CenterBB.y,-CenterBB.z);
-        rot.makeRotationX(Math.PI / 2);
-        //tra.makeTranslation (-centerBounding.x,-centerBounding.y*150,-centerBounding.z);
-        combined.multiply(sca);
-        //combined.multiply(tra);
-        combined.multiply(rot);
-        satellite.applyMatrix(combined);
+        satellite.applyMatrix(sca);
 
         satellite.userData.orbit = orbit;
         satellite.userData.speed = speed;

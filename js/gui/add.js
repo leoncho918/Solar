@@ -10,9 +10,9 @@ var texture_names = ["Mercury Texture", "Venus Texture",
                             "Ceres Texture", "Eris Texture", "Haumea Texture",
                             "Makemake Texture", "Pluto Texture", "Moon Texture"];
 
-var objects = ["satellite", "satellite_v2"];
+var objects = ["satellite", "satellite_v2", "satellite_v3"];
 
-var object_names = ["Satellite V1", "Satellite V2"];
+var object_names = ["Satellite V1", "Satellite V2", "Satellite V3"];
 
 function addStarGui(properties, folder, name, value, min, max) {
   switch(name) {
@@ -147,14 +147,8 @@ function addStarGui(properties, folder, name, value, min, max) {
 
     var satellite_params = {
       type: "Satellite",
-
       add: function() {
-          createSatellite(objType, 5, 15, "Earth");
-          //refreshMoons();
-          //moons_gui.open();
-          //moons[moons.length-1].userData.folder.open();
-          //add_gui.close();
-          //removeMoon("");
+          createSatellite(objType, 3, objSpeed, "Earth");
       }
     }
 
@@ -227,7 +221,7 @@ function addStarGui(properties, folder, name, value, min, max) {
         if (satellite) {
           satellite_folder = add_gui.addFolder('Add Satellite');
 
-          satellite_folder.add(satellite_params, 'type', objects).onChange(function(val) {
+          satellite_folder.add(satellite_params, 'type', object_names).onChange(function(val) {
             objType = objects[object_names.indexOf(val)];
           })
 

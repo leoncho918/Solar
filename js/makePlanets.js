@@ -38,6 +38,6 @@ function generatePlanets() {
   //Create Moons
   createMoon("Moon", moon_desc, "Natural Satellite", 0.25, "rgb(220,220,220)", "moon_texture.jpg", 10, 14, "Earth");
 
-  createSatellite("satellite", 5, 5, "Earth");
-  //createSatellite("satellite_v2", 5, 10, "Earth");
+  //Create Satellite
+  createSatellite("satellite", 3, 6, "Earth");
 }
