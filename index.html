@@ -9,14 +9,14 @@
 	</head>
 	<link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
 	<body>
-
+			<!-- Load external javascript files -->
 			<script src="js/libraries/three.js"></script>
 			<script src="js/libraries/PointerLockControls.js"></script>
 			<script src="js/libraries/dat.gui.js"></script>
 			<script src="js/libraries/jquery.min.js"></script>
 			<script src="js/libraries/TweenMax.min.js"></script>
 			<script src="js/controls.js"></script>
-			<script src="js/makePlanets.js"></script>
+			<script src="js/makeObjects.js"></script>
 			<script src="js/planet.js"></script>
 			<script src="js/moon.js"></script>
 			<script src="js/star.js"></script>
@@ -28,6 +28,7 @@
 			<script src="js/OBJLoader.js"></script>
 			<script src="js/MTLLoader.js"></script>
 
+		<!-- Layout for Welcome message, and object info text -->
 		<div id="blocker">
 			<img id = "border" src="img/border.png">
 			<div id="startMessage">
@@ -49,9 +50,10 @@
 		</div>
 
 		<script>
-
+			// Create variables to store the camera, scene, renderer, controls and boolean of whether controls are enabled.
 			var camera, scene, renderer, controls, controlsEnabled;
 
+			// Boolean variables to help control player movement
 			var moveForward = false;
 			var moveBackward = false;
 			var moveLeft = false;
@@ -59,6 +61,7 @@
 			var moveUp = false;
 			var moveDown = false;
 
+			// Variables to make performance uniform between different machines and to help control player movement
 			var prevTime = performance.now();
 			var velocity = new THREE.Vector3();
 			var direction = new THREE.Vector3();
@@ -66,26 +69,33 @@
 			var time = 0
 
 
+			// Function to set everything up
 			function init() {
-
+				// Get aspect ratio of window
 				var ratio = window.innerWidth/window.innerHeight;
+				// Assign camera variable
 				camera = new THREE.PerspectiveCamera(45,ratio,1,100000);
-
+				// Assign scene variable
 				scene = new THREE.Scene();
-
+				// Assign controls variable with camera attached
 				controls = new THREE.PointerLockControls( camera );
-
-        		controls.enabled = false;
+				// Disable controls
+				controls.enabled = false;
+				// Set boolean for controls being enabled to false
 				controlsEnabled = false;
+				//Add the controls object as a child of scene
 				scene.add( controls.getObject() );
 
+				// Assign variables to their corresponding element
 				info = document.getElementById('info');
 				d_name = document.getElementById('name');
 				d_category = document.getElementById('category');
 				d_desc = document.getElementById('desc');
 
+				//Method call to show welcome message
 				showStartUp();
 
+				//Method call to get configure controls
 				activateControls();
 
 				//Creates the skybox
@@ -148,53 +158,68 @@
 				 });
 				});
 
-				generatePlanets();
+				// Method call to populate scene with objects
+				generateObjects();
 
+				//Method call to build the gui for editing, adding, viewing and removing objects.
 				buildGui();
 
+				// Assign renderer variable with webglrenderer with antialiasing to true
 				renderer = new THREE.WebGLRenderer( { antialias: true } );
+				// Set the pixel ratio to the window
 				renderer.setPixelRatio( window.devicePixelRatio );
+				//Set the size of the render window to the same size as the window
 				renderer.setSize( window.innerWidth, window.innerHeight );
+				// Set the renderer to show shadows
 				renderer.shadowMapEnabled = true;
 				renderer.shadowMapHard = true;
 
+				//Attach the renderer to the document's body
 				document.body.appendChild( renderer.domElement );
-
+				// Add an ambient light to the scene so it's not completely dark
 				var ambientlight = new THREE.AmbientLight(new THREE.Color(1, 1, 1), 0.5);
 				scene.add(ambientlight);
-
+				// Translate the starting positiion of the user
 				controls.getObject().translateZ(100);
-
+				// Add an event listener to resize the renderer and camera when the window is resized.
 				window.addEventListener( 'resize', onWindowResize, false );
 			}
 
+			// Function to resize the camera and renderer when the window size is changed.
 			function onWindowResize() {
 				camera.aspect = window.innerWidth / window.innerHeight;
 				camera.updateProjectionMatrix();
 				renderer.setSize( window.innerWidth, window.innerHeight );
 			}
 
+			// Function call to set up everything
 			init();
+			// Function call to start animating the scene
 			animate();
 
+			// Function that is called multiple times to animate the scene
 			function animate() {
-
+				// Recall animate frame to animate scene
 				requestAnimationFrame( animate );
 
+				// Check if controls are enabled
 				if ( controlsEnabled == true ) {
-
-				 var time = performance.now();
+					// Create variables to ensure the same movement speed between different systems
+				 	var time = performance.now();
 					var delta =  ( time - prevTime ) / 1000;
 
+					// Change velocity vector values for all three axis
 					velocity.x -= velocity.x * 10.0 * delta;
 					velocity.z -= velocity.z * 10.0 * delta;
 					velocity.y -= velocity.y * 10.0 * delta;
 
+					// Assign direction vector values for all three axis
 					direction.z = Number( moveForward ) - Number( moveBackward );
 					direction.x = Number( moveLeft ) - Number( moveRight );
 					direction.y = Number( moveDown ) - Number( moveUp );
 					direction.normalize();
 
+					//Check whether the we are moving up/down, left/right or forward/backward and modify the vector value of velocity
 					if ( moveForward || moveBackward )
 						velocity.z -= direction.z * 400.0 * delta;
 
@@ -204,36 +229,46 @@
 					if ( moveUp || moveDown )
 						velocity.y -= direction.y * 400.0 * delta;
 
+					// Translate the controls object by the velocity vector value multiplied by the performance of the system.
 					controls.getObject().translateX( velocity.x * delta );
 					controls.getObject().translateZ( velocity.z * delta );
 					controls.getObject().translateY( velocity.y * delta );
 
+					//Assign the new system performance.
 					prevTime = time;
 
 				}
 
+				// Assign time variable to be used to control planet/moon orbits
 				time = Date.now() * 0.0001;
 
+				// Change the position of each planet in their orbit path
 				planets.forEach(function(planet) {
+					// Get the orbit distance and orbit speed of the planet
 					var orbit = planet.userData.orbit;
 					var speed = planet.userData.speed;
+					// Change the position of the planet mesh's x and z to a new position based on the speed and orbit distance
 					planet.position.x = Math.cos(time * speed) * orbit;
 					planet.position.z = Math.sin(time * speed) * orbit;
 
-
+					// Increment the rotation y value of each planet to simulate the spin of each planet
 					planet.rotation.y += planet.userData.rotation;
 				});
 
+				// Change the position of each moon in their orbit path
 				moons.forEach(function(moon) {
+					// Get the orbit distance, orbit speed and centre mass of the moon
 					var orbit = moon.userData.orbit;
 					var speed = moon.userData.speed;
 					var centreName = moon.userData.centreMass;
+					// Find the moon's centre mass and copy it's position to the moon
 					planets.forEach(function(planet) {
 						if (planet.userData.name == centreName) {
 							moon.position.x = planet.position.x;
 							moon.position.z = planet.position.z;
 						}
 					});
+					// Change the position of the moon mesh's x and z to a new position based on it's speed and orbit distance
 					moon.position.x = Math.cos(time * speed) * orbit;
 					moon.position.z = Math.sin(time * speed) * orbit;
 				});
@@ -254,7 +289,7 @@
 					satellite.position.y = Math.cos(time * speed) * orbit;
 
 				});
-
+				// Get the renderer to render the scene
 				renderer.render( scene, camera );
 
 			}
