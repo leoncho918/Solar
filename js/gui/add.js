@@ -226,6 +226,8 @@ function addStarGui(properties, folder, name, value, min, max) {
       if (val == "Satellite") {
         if (planet)
           add_gui.removeFolder(planet_folder);
+        if (moon)
+          add_gui.removeFolder(moon_folder);
         planet = false;
         moon = false;
         satellite = true;
