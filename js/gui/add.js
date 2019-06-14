@@ -222,7 +222,8 @@ function addStarGui(properties, folder, name, value, min, max) {
           moon_folder.add(moon_params, 'add');
         }
       }
-      //Satellite
+
+      //Add Satellites
       if (val == "Satellite") {
         if (planet)
           add_gui.removeFolder(planet_folder);
