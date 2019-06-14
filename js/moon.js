@@ -2,7 +2,7 @@ var createMoon = function(name, description, category, radius, colour, texture, 
 
   var geometry = new THREE.SphereGeometry(radius, 32, 32);
   var material = new THREE.MeshPhongMaterial({
-    map: new THREE.TextureLoader().load('../img/textures/'+texture+''),
+    map: new THREE.TextureLoader().load('img/textures/'+texture+''),
     shininess: 0
   });
 

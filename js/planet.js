@@ -2,7 +2,7 @@ var createPlanet = function(name, description, category, radius, colour, texture
 
   var geometry = new THREE.SphereGeometry(radius, 32, 32);
   var material = new THREE.MeshPhongMaterial({
-    map: new THREE.TextureLoader().load('../img/textures/'+texture+''),
+    map: new THREE.TextureLoader().load('img/textures/'+texture+''),
     shininess: 0
   });
 
@@ -33,7 +33,7 @@ var createPlanet = function(name, description, category, radius, colour, texture
 
     ring_mesh.castShadow = true;
     ring_mesh.receiveShadow = true;
-    
+
     planet.userData.rotation = 0;
 
     planet.add(ring_mesh);

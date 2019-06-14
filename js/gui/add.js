@@ -10,6 +10,10 @@ var texture_names = ["Mercury Texture", "Venus Texture",
                             "Ceres Texture", "Eris Texture", "Haumea Texture",
                             "Makemake Texture", "Pluto Texture", "Moon Texture"];
 
+var objects = ["satellite", "satellite_v2"];
+
+var object_names = ["Satellite V1", "Satellite V2"];
+
 function addStarGui(properties, folder, name, value, min, max) {
   switch(name) {
     case "colour":
@@ -139,12 +143,27 @@ function addStarGui(properties, folder, name, value, min, max) {
       }
     }
 
+    var objType;
+
+    var satellite_params = {
+      type: "Satellite",
+
+      add: function() {
+          createSatellite(objType, 5, 15, "Earth");
+          //refreshMoons();
+          //moons_gui.open();
+          //moons[moons.length-1].userData.folder.open();
+          //add_gui.close();
+          //removeMoon("");
+      }
+    }
+
     var planet_folder, moon_folder;
     var planet = false;
     var moon = false;
 
     add_gui = gui.addFolder("Add");
-    add_gui.add(add_params, 'item', [ 'Planet', 'Moon' ]).onChange(function(val) {
+    add_gui.add(add_params, 'item', [ 'Planet', 'Moon', 'Satellite']).onChange(function(val) {
       if (val == "Planet") {
         if (moon)
           add_gui.removeFolder(moon_folder);
@@ -196,6 +215,23 @@ function addStarGui(properties, folder, name, value, min, max) {
             custom_moon[8] = val;
           });
           moon_folder.add(moon_params, 'add');
+        }
+      }
+      //Satellite
+      if (val == "Satellite") {
+        if (planet)
+          add_gui.removeFolder(planet_folder);
+        planet = false;
+        moon = false;
+        satellite = true;
+        if (satellite) {
+          satellite_folder = add_gui.addFolder('Add Satellite');
+
+          satellite_folder.add(satellite_params, 'type', objects).onChange(function(val) {
+            objType = objects[object_names.indexOf(val)];
+          })
+
+          satellite_folder.add(satellite_params, 'add');
         }
       }
     });

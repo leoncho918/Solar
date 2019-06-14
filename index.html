@@ -20,6 +20,7 @@
 			<script src="js/planet.js"></script>
 			<script src="js/moon.js"></script>
 			<script src="js/star.js"></script>
+			<script src="js/satellite.js"> </script>
 			<script src="js/gui/gui.js"></script>
 			<script src="js/gui/add.js"></script>
 			<script src="js/gui/remove.js"></script>
@@ -235,6 +236,23 @@
 					});
 					moon.position.x = Math.cos(time * speed) * orbit;
 					moon.position.z = Math.sin(time * speed) * orbit;
+				});
+
+				//Satellite animation
+				satellites.forEach(function(satellite) {
+					var orbit = satellite.userData.orbit;
+					var speed = satellite.userData.speed;
+					var centreName = satellite.userData.centreMass;
+					planets.forEach(function(planet) {
+						if (planet.userData.name == centreName) {
+							satellite.position.x = planet.position.x;
+							satellite.position.z = planet.position.z;
+						}
+					});
+					satellite.position.x = Math.cos(time * speed) * orbit;
+					satellite.position.z = Math.sin(time * speed) * orbit;
+					satellite.position.y = Math.cos(time * speed) * orbit;
+
 				});
 
 				renderer.render( scene, camera );
